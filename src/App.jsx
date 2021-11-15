@@ -1,7 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
+import {Message} from "./Message";
 
 function App() {
+  const greeting = 'Hello my dear friend!';
   return (
     <div className="App">
       <header className="App-header">
@@ -17,6 +19,7 @@ function App() {
         >
           Learn React
         </a>
+        <Message text={greeting}/>
       </header>
     </div>
   );
