@@ -1,27 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
-import {Message} from "./Message";
+import './App.sass';
+import { MessageList } from "./Components/MessageList";
 
 function App() {
-  const greeting = 'Hello my dear friend!';
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <Message text={greeting}/>
-      </header>
-    </div>
+      <div className="App">
+          <header className="App-header">
+              <div className="Wrapper">
+                  <div className="Chat-header">OutstandingChat</div>
+                  <MessageList />
+              </div>
+          </header>
+      </div>
   );
 }
 
