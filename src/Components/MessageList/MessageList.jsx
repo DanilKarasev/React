@@ -30,10 +30,6 @@ export const MessageList = () => {
         setMessage('')
     }
 
-
-
-
-
     return (
         <div className={"Chat"}>
             <div className={"Chat-body"}>
