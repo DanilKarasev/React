@@ -1,16 +1,13 @@
 import './App.sass';
 import { MessageList } from "./Components/MessageList";
+import { ChatsList } from "./Components/ChatsList/ChatsList";
 
 function App() {
 
   return (
-      <div className="App">
-          <header className="App-header">
-              <div className="Wrapper">
-                  <div className="Chat-header">OutstandingChat</div>
-                  <MessageList />
-              </div>
-          </header>
+      <div className="Container">
+          <ChatsList />
+          <MessageList />
       </div>
   );
 }
