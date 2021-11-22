@@ -5,19 +5,19 @@ import faker from 'faker'
 export const MessageList = () => {
     const [messageList, setMessageList] = useState([]);
 
-    let ref = useRef(null);
+    let inputRef = useRef(null);
 
     useEffect(() => {
-        clearInterval(ref.current);
+        clearInterval(inputRef.current);
         if (messageList.length) {
             if (messageList[messageList.length - 1].author === 'ME') {
-                ref.current = setTimeout(() => {
+                inputRef.current = setTimeout(() => {
                     setMessageList([...messageList, {message: faker.lorem.sentence(), author: faker.name.findName(), id:faker.datatype.uuid()}]);
                 }, 1500);
-                return () => clearInterval(ref.current);
+                return () => clearInterval(inputRef.current);
             }
         }
-    }, [messageList.length]);
+    }, [messageList, messageList.length]);
 
     let [message, setMessage] = useState('');
     const handleMessage = (e) => {
@@ -30,6 +30,8 @@ export const MessageList = () => {
         setMessage('')
     }
 
+    console.log(messageList)
+
     return (
         <div className={"Chat"}>
             <div className={"Chat-body"}>
@@ -39,7 +41,7 @@ export const MessageList = () => {
             </div>
             <div className={"Chat-footer"}>
                 <form action="submit" onSubmit={addMessage}>
-                    <input value={message} onChange={handleMessage} placeholder={"Message"} type="text" required/> <button type={"submit"}/>
+                    <input ref={inputRef} value={message} onChange={handleMessage} placeholder={"Message"} type="text" required/> <button type={"submit"}/>
                 </form>
             </div>
         </div>
