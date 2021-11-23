@@ -8,7 +8,6 @@ export const MessageList = () => {
     let inputRef = useRef(null);
 
     useEffect(() => {
-        clearInterval(inputRef.current);
         if (messageList.length) {
             if (messageList[messageList.length - 1].author === 'ME') {
                 inputRef.current = setTimeout(() => {
@@ -20,7 +19,7 @@ export const MessageList = () => {
         }
     }, [messageList, messageList.length]);
 
-    let [message, setMessage] = useState('');
+    const [message, setMessage] = useState('');
     const handleMessage = (e) => {
         setMessage(e.target.value);
     }
@@ -31,8 +30,6 @@ export const MessageList = () => {
         setMessageList([...messageList, {message, author: 'ME', id:faker.datatype.uuid(), time: newDate.toTimeString().split(' ')[0].slice(0, -3)}]);
         setMessage('')
     }
-
-    console.log(messageList)
 
     return (
         <div className={"Chat"}>
