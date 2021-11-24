@@ -33,7 +33,7 @@ export const MessageList = () => {
 
     return (
         <div className={"Chat"}>
-            <div className="Chat-header">OutstandingChat</div>
+            <div className="Chat-header">Chat info</div>
             <div className={"Chat-body"}>
                 {messageList.map(({message, author, id, time}) => (
                     <div key={id} className={(author === 'ME') ? "Message Message-me" : "Message"}>
@@ -46,7 +46,7 @@ export const MessageList = () => {
                 ))}
             </div>
             <div className={"Chat-footer"}>
-                <form action="submit" onSubmit={addMessage}>
+                <form onSubmit={addMessage}>
                     <input ref={inputRef} value={message} onChange={handleMessage} placeholder={"Message"} type="text" required autoFocus={true}/> <button type={"submit"}/>
                 </form>
             </div>

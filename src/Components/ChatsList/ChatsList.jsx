@@ -7,15 +7,14 @@ import Avatar from '@mui/material/Avatar';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import react_js from './images/chatAvatars/react_js.jpg'
-import gb_js from './images/chatAvatars/gb-js.jpg'
-import faker from 'faker'
+import react_js from './images/chatAvatars/react_js.jpg';
+import gb_js from './images/chatAvatars/gb-js.jpg';
 import {useState} from "react";
-import "./ChatsList.sass"
+import "./ChatsList.sass";
 
 const chats = [
-    {name: 'React JS', id: faker.datatype.uuid(), avatar: react_js},
-    {name: 'GB_JS', id: faker.datatype.uuid(), avatar: gb_js},
+    {name: 'React JS', id: 1, avatar: react_js},
+    {name: 'GB_JS', id: 2, avatar: gb_js},
 ];
 
 export const ChatsList = () => {
@@ -30,18 +29,21 @@ export const ChatsList = () => {
 
     return (
         <div className={"Chat-wrapper"}>
-            <Paper
-                component="div"
-                sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', boxShadow: 'none', borderRadius: '0', borderBottom: '1px solid #dfe1e5' }}
-            >
-                <SearchIcon sx={{color: '#a2a5a8', paddingLeft: '10px'}} />
-                <InputBase
-                    sx={{ ml: 1, flex: 1 }}
-                    placeholder="Search Chats"
-                    inputProps={{ 'aria-label': 'search chats' }}
-                    onChange={(e) => setValue(e.target.value)}
-                />
-            </Paper>
+            <div className={"Chat-left-header"}>
+                <Avatar/>
+                <Paper
+                    component="div"
+                    sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', boxShadow: 'none', borderRadius: '0', borderBottom: '1px solid #dfe1e5' }}
+                >
+                    <SearchIcon sx={{color: '#a2a5a8', paddingLeft: '10px'}} />
+                    <InputBase
+                        sx={{ ml: 1, flex: 1 }}
+                        placeholder="Search Chats"
+                        inputProps={{ 'aria-label': 'search chats' }}
+                        onChange={(e) => setValue(e.target.value)}
+                    />
+                </Paper>
+            </div>
 
             <List component="nav" aria-labelledby="nested-list-subheader"
                 subheader={
