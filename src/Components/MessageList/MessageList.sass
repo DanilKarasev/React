@@ -1,4 +1,4 @@
-* form, button, img, input
+* form, button, img, input, h4
   margin: 0
   padding: 0
   border: 0
@@ -6,12 +6,17 @@
 
 .Chat-header
   background-color: white
-  color: #3390ec
+  display: flex
+  gap: 10px
+  align-items: center
+  color: black
   font-size: 24px
   font-weight: 600
   height: 46px
   padding: 4px 4px 4px 8px
   border-bottom: 1px solid #dfe1e5
+  h4
+    font-weight: 600
 
 .Chat
   display: flex
@@ -82,6 +87,7 @@
   padding: 1%
   max-width: 480px
   text-align: left
+  align-self: flex-start
   &-me
     align-self: flex-end
     background-color: #eeffde

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c688fd10-723d-4f1c-a1ee-63c0b89a5fb6" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+        <option value="JavaScript File" />
+        <option value="Sass File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="dev" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/App.jsx" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Router/Router.jsx" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="ProjectId" id="20xHyyNF7QWTZp0gJx9CvqPFewl" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/Router" />
+    <property name="list.type.of.created.stylesheet" value="Sass" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Git\React\my-project\src\Router" />
+      <recent name="D:\Git\React\my-project\src\Components\ChatsList" />
+      <recent name="D:\Git\React\my-project\src\Components\MessageList" />
+      <recent name="D:\Git\React\my-project\src\Components\InputMessage" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Git\React\my-project\src\Components\MessageList" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c688fd10-723d-4f1c-a1ee-63c0b89a5fb6" name="Changes" comment="" />
+      <created>1636979579149</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1636979579149</updated>
+      <workItem from="1636979581534" duration="2867000" />
+      <workItem from="1637212314152" duration="102000" />
+      <workItem from="1637212426925" duration="2243000" />
+      <workItem from="1637214778410" duration="35200000" />
+      <workItem from="1637568873284" duration="12927000" />
+      <workItem from="1637582814273" duration="694000" />
+      <workItem from="1637595754630" duration="1202000" />
+      <workItem from="1637648612459" duration="3329000" />
+      <workItem from="1637665615793" duration="833000" />
+      <workItem from="1637722756972" duration="1531000" />
+      <workItem from="1637742169679" duration="4347000" />
+      <workItem from="1637746633454" duration="2003000" />
+      <workItem from="1637748658791" duration="84000" />
+      <workItem from="1637748756649" duration="17000" />
+      <workItem from="1637748863913" duration="385000" />
+    </task>
+    <task id="LOCAL-00001" summary="Minor updates">
+      <created>1636981455600</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1636981455600</updated>
+    </task>
+    <task id="LOCAL-00002" summary="css update">
+      <created>1636981682186</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1636981682186</updated>
+    </task>
+    <task id="LOCAL-00003" summary="My version of telegram web. Hope Pasha will hire me.">
+      <created>1637249517041</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1637249517041</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Папка .idea почему-то не игнорится(">
+      <created>1637250003584</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1637250003584</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Error fix([messageList, messageList.length])">
+      <created>1637569684369</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1637569684369</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Lesson 3 homework">
+      <created>1637596557268</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1637596557268</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Added searchChats">
+      <created>1637655252883</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1637655252883</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Sass file">
+      <created>1637655332352</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1637655332352</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Sass minor changes">
+      <created>1637655448337</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1637655448337</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Minor changes">
+      <created>1637743533459</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1637743533459</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Lesson 4 homework">
+      <created>1637748949027</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1637748949027</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Minor updates" />
+    <MESSAGE value="css update" />
+    <MESSAGE value="My version of telegram web. Hope Pasha will hire me." />
+    <MESSAGE value="Папка .idea почему-то не игнорится(" />
+    <MESSAGE value="Error fix([messageList, messageList.length])" />
+    <MESSAGE value="Lesson 3 homework" />
+    <MESSAGE value="Added searchChats" />
+    <MESSAGE value="Sass file" />
+    <MESSAGE value="Sass minor changes" />
+    <MESSAGE value="Minor changes" />
+    <MESSAGE value="Lesson 4 homework" />
+    <option name="LAST_COMMIT_MESSAGE" value="Lesson 4 homework" />
+  </component>
+</project>

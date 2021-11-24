@@ -1,8 +1,9 @@
 import React, {useEffect, useRef, useState} from "react";
 import "./MessageList.sass"
 import faker from 'faker'
+import Avatar from "@mui/material/Avatar";
 
-export const MessageList = () => {
+export const MessageList = ({currentChat}) => {
     const [messageList, setMessageList] = useState([]);
 
     let inputRef = useRef(null);
@@ -33,7 +34,7 @@ export const MessageList = () => {
 
     return (
         <div className={"Chat"}>
-            <div className="Chat-header">Chat info</div>
+            <div className="Chat-header"> <Avatar alt={ currentChat.name } src={ currentChat.avatar }/> <h4>{ currentChat.name }</h4> </div>
             <div className={"Chat-body"}>
                 {messageList.map(({message, author, id, time}) => (
                     <div key={id} className={(author === 'ME') ? "Message Message-me" : "Message"}>
