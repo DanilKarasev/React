@@ -1,82 +1,74 @@
 import React from "react";
+import Avatar from '@mui/material/Avatar';
+import Paper from '@mui/material/Paper';
+import InputBase from '@mui/material/InputBase';
+import SearchIcon from '@mui/icons-material/Search';
 import { useState } from "react";
-import { BrowserRouter, Link, Switch, Route, Redirect } from "react-router-dom";
-import { Chats } from "../Screens/Chats";
 import { Home } from "../Screens/Home";
 import { Profile } from "../Screens/Profile";
 import { ROUTES } from "./constants";
+import react_js from "./images/chatAvatars/react_js.jpg";
+import gb_js from "./images/chatAvatars/gb-js.jpg";
+import {BrowserRouter , Link , Redirect , Route , Switch } from "react-router-dom";
+import "./Router.sass"
+import {Chats} from "../Screens/Chats";
+import {ChatList} from "../Components/ChatList";
 
-const INIT_CHATS = { id1: { name: "chat 1" } };
+const chats = [
+    {name: 'React JS', avatar: react_js},
+    {name: 'GB_JS', avatar: gb_js},
+];
 
 export const Router = () => {
-  const [chatList] = useState(INIT_CHATS);
-  return (
-      <div className={'Container'}>
-          <div className={"Chat-wrapper"}>
-          <div className={"Chat-left-header"}>
+    const [chatsList] = useState (chats);
 
-            <Avatar/>
+    const [search , setSearch] = useState ('');
 
-            <Paper component="div" sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', boxShadow: 'none', borderRadius: '0', borderBottom: '1px solid #dfe1e5' }}>
-              <SearchIcon sx={{color: '#a2a5a8', paddingLeft: '10px'}} />
-              <InputBase
-                  sx={{ ml: 1, flex: 1 }}
-                  placeholder="Search Chats"
-                  inputProps={{ 'aria-label': 'search chats' }}
-                  onChange={(e) => setValue(e.target.value)}
-              />
-            </Paper>
+    const filteredChats = chatsList.filter (chat => {
+        return chat.name.toLowerCase ().includes (search.toLowerCase ())
+    });
 
-          </div>
+    return (
+        <BrowserRouter>
+            <div className={ 'Container' }>
+                <div className={ "Chat-wrapper" }>
+                    <div className={ "Chat-left-header" }>
 
-          <List component="nav" aria-labelledby="nested-list-subheader"
-                subheader={
-                  <ListSubheader component="div" id="nested-list-subheader">
-                    Список чатов
-                  </ListSubheader>
-                }>
-            {filteredChats.map(({name, id, avatar}) => (
-                <ListItemButton key={id} sx={{
-                  gap: '10px'
-                }}>
-                  <Avatar alt={name} src={avatar} />
-                  <ListItemText primary={name} />
-                </ListItemButton>
-            ))}
-          </List>
-        </div>
-          <Switch>
-              <Route exact path={ROUTES.HOME} render={() => <Home />} />
-              <Route exact path={ROUTES.CHAT} render={() => <Home />} />
-          </Switch>
-      </div>
-    // <BrowserRouter>
-    //   <ul>
-    //     <li>
-    //       <Link to={ROUTES.HOME}>Home</Link>
-    //     </li>
-    //     <li>
-    //       <Link to={ROUTES.CHAT}>Chats</Link>
-    //     </li>
-    //     <li>
-    //       <Link to={ROUTES.PROFILE}>Profile</Link>
-    //     </li>
-    //   </ul>
-    //
-    //   <Switch>
-    //     <Route exact path={ROUTES.CHATS}>
-    //       <Chats chatList={chatList} />
-    //     </Route>
-    //     <Route exact path={ROUTES.PROFILE} component={Profile} />
-    //     <Route exact path={ROUTES.HOME} render={() => <Home />} />
-    //     <Route exact path={ROUTES.NO_CHAT}>
-    //       no chat content
-    //     </Route>
-    //     <Route path={ROUTES.NOT_FOUND}>Not found 404</Route>
-    //     <Route>
-    //       <Redirect to={ROUTES.NOT_FOUND} />
-    //     </Route>
-    //   </Switch>
-    // </BrowserRouter>
-  );
+                        <Link to={ ROUTES.PROFILE }><Avatar /></Link>
+
+                        <Paper component="div" sx={ {
+                            p : '2px 4px' ,
+                            display : 'flex' ,
+                            alignItems : 'center' ,
+                            boxShadow : 'none' ,
+                            borderRadius : '0' ,
+                            borderBottom : '1px solid #dfe1e5'
+                        } }>
+                            <SearchIcon sx={ { color : '#a2a5a8' , paddingLeft : '10px' } }/>
+                            <InputBase
+                                sx={ { ml : 1 , flex : 1 } }
+                                placeholder="Search Chats"
+                                inputProps={ { 'aria-label' : 'search chats' } }
+                                onChange={ ( e ) => setSearch ( e.target.value ) }
+                            />
+                        </Paper>
+                    </div>
+
+                    <ChatList filteredChats={filteredChats} />
+                </div>
+
+                <Switch>
+                    <Route exact path={ ROUTES.HOME } render={ () => <Home/> }/>
+                    <Route exact path={ ROUTES.PROFILE } render={ () => <Profile/> }/>
+                    <Route path={ ROUTES.CHATS }>
+                        <Chats chatList = {chatsList} />
+                    </Route>
+                    <Route>
+                        <Redirect to={ROUTES.HOME} />
+                    </Route>
+                </Switch>
+
+            </div>
+        </BrowserRouter>
+    );
 };
