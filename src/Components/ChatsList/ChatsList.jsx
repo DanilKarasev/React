@@ -30,11 +30,10 @@ export const ChatsList = () => {
     return (
         <div className={"Chat-wrapper"}>
             <div className={"Chat-left-header"}>
+
                 <Avatar/>
-                <Paper
-                    component="div"
-                    sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', boxShadow: 'none', borderRadius: '0', borderBottom: '1px solid #dfe1e5' }}
-                >
+
+                <Paper component="div" sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', boxShadow: 'none', borderRadius: '0', borderBottom: '1px solid #dfe1e5' }}>
                     <SearchIcon sx={{color: '#a2a5a8', paddingLeft: '10px'}} />
                     <InputBase
                         sx={{ ml: 1, flex: 1 }}
@@ -43,6 +42,7 @@ export const ChatsList = () => {
                         onChange={(e) => setValue(e.target.value)}
                     />
                 </Paper>
+
             </div>
 
             <List component="nav" aria-labelledby="nested-list-subheader"
