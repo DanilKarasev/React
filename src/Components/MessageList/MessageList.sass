@@ -4,14 +4,25 @@
   border: 0
   outline: none
 
+.Chat-header
+  background-color: white
+  color: #3390ec
+  font-size: 24px
+  font-weight: 600
+  height: 46px
+  padding: 4px 4px 4px 8px
+  border-bottom: 1px solid #dfe1e5
+
 .Chat
   display: flex
   flex-direction: column
-  background-color: #00171f
-  background-image: url("app-background.svg")
+  background: rgb(144,149,0)
+  background: radial-gradient(circle, #909504 -114%, #62AA01 -97%, #B5AC5F 86%)
+  background-position: bottom 300px right 320px
   width: 600px
-  height: 92vh
-  border-radius: 0 0 20px 20px
+  height: 100vh
+  flex-grow: 1
+  border-left: 1px solid #dfe1e5
 
 .Chat-body
   display: flex
@@ -20,26 +31,14 @@
   gap: 20px
   padding: 1vh
   flex-grow: 1
-
-.Message
-  box-sizing: border-box
-  display: flex
-  flex-direction: column
-  background-color: white
-  border-radius: 5px
-  padding: 1%
-  width: fit-content
-  text-align: left
-  h4
-    color: #895dd5
-    padding-bottom: 10px
-  p
-    word-wrap: break-word
-  &-me
-    align-self: flex-end
-    background-color: #eeffde
+  width: 60%
+  max-width: 720px
+  margin: 0 auto
 
 .Chat-footer
+  width: 60%
+  min-width: 300px
+  margin: 0 auto
   font-size: 24px
   font-weight: 600
   padding: 1vh
@@ -53,7 +52,7 @@
       resize: none
       border-radius: 20px
       padding-left: 4%
-      width: 480px
+      flex-grow: 1
       font-size: 16px
       height: 45px
       margin-right: 15px
@@ -73,4 +72,33 @@
         filter: brightness(120%)
       &:active
         filter: brightness(50%)
+
+.Message
+  box-sizing: border-box
+  display: flex
+  flex-direction: column
+  background-color: white
+  border-radius: 5px
+  padding: 1%
+  max-width: 480px
+  text-align: left
+  &-me
+    align-self: flex-end
+    background-color: #eeffde
+  h4
+    color: #895dd5
+    padding-bottom: 10px
+  &-box
+    display: flex
+    gap: 10px
+  &-text
+    word-wrap: break-word
+    flex-grow: 1
+  &-time
+    color: #707579
+    height: 12px
+    font-size: 12px
+    align-self: flex-end
+
+
 
