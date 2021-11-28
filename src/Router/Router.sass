@@ -15,6 +15,8 @@ a
 .Chat-wrapper
   width: 100%
   max-width: 360px
+  display: flex
+  flex-direction: column
 
 .Chat-left-header
   display: flex
@@ -24,10 +26,37 @@ a
   height: 46px
   border-bottom: 1px solid #dfe1e5
 
+.Chat-content
+  flex-grow: 1
+
+.Chat-left-footer
+  display: flex
+  align-items: center
+  gap: 2%
+  padding: 4px 4px 4px 8px
+  height: 46px
+  border-top: 1px solid #dfe1e5
+
 .css-5yjc7j-MuiPaper-root
   flex-grow: 1
   border: 1px solid #dfe1e5 !important
   border-radius: 20px !important
 
 .css-1g98tuo-MuiButtonBase-root-MuiListItemButton-root.Mui-selected
-  background-color: rgba(23, 143, 210, 0.7) !important
+  color: white
+  background-color: #3390ec !important
+
+.css-i4bv87-MuiSvgIcon-root
+
+  color: white
+  background-color: #3390ec
+  padding: 5px
+  border-radius: 50px
+  cursor: pointer
+  &:hover
+    transition: all ease 0.3s
+    background-color: rgb(3, 94, 168)
+  &:active
+    transition: all ease 0.3s
+    background-color: rgb(1, 50, 92)
+
