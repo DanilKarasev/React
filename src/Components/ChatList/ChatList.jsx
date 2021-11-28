@@ -7,6 +7,7 @@ import ListItemText from "@mui/material/ListItemText";
 import List from "@mui/material/List";
 import DeleteIcon from "@mui/icons-material/Delete";
 import React from "react";
+import "./ChatList.sass";
 
 export const ChatList = ({ filteredChats }) => {
   const location = useLocation();
@@ -36,7 +37,7 @@ export const ChatList = ({ filteredChats }) => {
                 {name[0]}
               </Avatar>
               <ListItemText primary={name} />
-              <DeleteIcon />
+              <DeleteIcon className={"Delete-icon"} />
             </ListItemButton>
           </Link>
         ))}
