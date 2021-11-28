@@ -5,6 +5,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import Avatar from "@mui/material/Avatar";
 import ListItemText from "@mui/material/ListItemText";
 import List from "@mui/material/List";
+import DeleteIcon from "@mui/icons-material/Delete";
 import React from "react";
 
 export const ChatList = ({ filteredChats }) => {
@@ -35,6 +36,7 @@ export const ChatList = ({ filteredChats }) => {
                 {name[0]}
               </Avatar>
               <ListItemText primary={name} />
+              <DeleteIcon />
             </ListItemButton>
           </Link>
         ))}
