@@ -23,7 +23,7 @@ export const MessageList = ({ currentChat }) => {
             },
           ]);
         }, 1500);
-        return () => clearInterval(inputRef.current);
+        return () => clearTimeout(inputRef.current);
       }
     }
   }, [messageList.length, messageList]);
@@ -51,8 +51,7 @@ export const MessageList = ({ currentChat }) => {
   return (
     <div className={"Chat"}>
       <div className="Chat-header">
-        {" "}
-        <Avatar alt={currentChat.name} src={currentChat.avatar} />{" "}
+        <Avatar alt={currentChat.name} src={currentChat.avatar} />
         <h4>{currentChat.name}</h4>{" "}
       </div>
       <div className={"Chat-body"}>

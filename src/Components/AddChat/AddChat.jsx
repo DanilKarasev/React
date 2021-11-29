@@ -15,20 +15,18 @@ export const AddChat = ({ chatList, setChatList }) => {
 
     chatList.forEach((el) => {
       allChatNames.push(Object.values(el)[0]);
-    });
+    }); // создаем массив со всеми существующими именами чатов
 
     const checkChatName = (arr, val) => {
       return arr.some((arrVal) => val === arrVal);
-    };
+    }; // функция проверяющая совпадение нового имени чата с существующими
 
     if (checkChatName(allChatNames, newChatName)) {
       alert("Введите уникальное имя чата!");
     } else if (newChatName.length === 0) {
       alert("Имя чата не может быть пустым!");
     } else {
-      let newChat = { name: newChatName, avatar: "" };
-      chatList.push(newChat);
-      setChatList([...chatList]);
+      setChatList([...chatList, { name: newChatName, avatar: "" }]);
       setNewChatName("");
     }
   };
@@ -54,7 +52,7 @@ export const AddChat = ({ chatList, setChatList }) => {
           inputProps={{ "aria-label": "Add chats" }}
         />
       </Paper>
-      <AddIcon onClick={addChat}>CLICK</AddIcon>
+      <AddIcon onClick={addChat} />
     </div>
   );
 };
