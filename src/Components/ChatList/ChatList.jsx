@@ -9,11 +9,17 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import React from "react";
 import "./ChatList.sass";
 
-export const ChatList = ({ filteredChats }) => {
+export const ChatList = ({ filteredChats, chatList, setChatList }) => {
   const location = useLocation();
 
   let currentChatName = location.pathname.split("/");
-  currentChatName = currentChatName[currentChatName.length - 1];
+  currentChatName = currentChatName[currentChatName.length - 1]; //Имя текущего чата в виде строки
+
+  const removeChat = (name) => {
+    const index = chatList.findIndex((el) => el.name === name);
+    chatList.splice(index, 1);
+    setChatList([...chatList]);
+  };
 
   return (
     <div className={"Chat-content"}>
@@ -22,8 +28,7 @@ export const ChatList = ({ filteredChats }) => {
         aria-labelledby="nested-list-subheader"
         subheader={
           <ListSubheader component="div" id="nested-list-subheader">
-            {" "}
-            Список чатов{" "}
+            Список чатов
           </ListSubheader>
         }
       >
@@ -37,7 +42,10 @@ export const ChatList = ({ filteredChats }) => {
                 {name[0]}
               </Avatar>
               <ListItemText primary={name} />
-              <DeleteIcon className={"Delete-icon"} />
+              <DeleteIcon
+                onClick={() => removeChat(name)}
+                className={"Delete-icon"}
+              />
             </ListItemButton>
           </Link>
         ))}
