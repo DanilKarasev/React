@@ -31,7 +31,11 @@ export const Router = () => {
       <div className={"Container"}>
         <div className={"Chat-wrapper"}>
           <SearchChats setSearch={setSearch} />
-          <ChatList filteredChats={filteredChats} />
+          <ChatList
+            filteredChats={filteredChats}
+            chatList={chatList}
+            setChatList={setChatList}
+          />
           <AddChat chatList={chatList} setChatList={setChatList} />
         </div>
 
