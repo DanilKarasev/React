@@ -3,48 +3,58 @@ import "./MessageList.sass";
 import faker from "faker";
 import Avatar from "@mui/material/Avatar";
 
-export const MessageList = ({ currentChat }) => {
-  const [messageList, setMessageList] = useState([]);
-
+export const MessageList = ({ currentChat, messageList, setMessageList }) => {
   let inputRef = useRef(null);
 
-  useEffect(() => {
-    if (messageList.length) {
-      if (messageList[messageList.length - 1].author === "ME") {
-        inputRef.current = setTimeout(() => {
-          let newDate = new Date();
-          setMessageList([
-            ...messageList,
-            {
-              message: faker.lorem.sentence(),
-              author: faker.name.findName(),
-              id: faker.datatype.uuid(),
-              time: newDate.toTimeString().split(" ")[0].slice(0, -3),
-            },
-          ]);
-        }, 1500);
-        return () => clearTimeout(inputRef.current);
-      }
-    }
-  }, [messageList.length, messageList]);
+  // useEffect(() => {
+  //   if (messageList.length) {
+  //     if (messageList[messageList.length - 1].author === "ME") {
+  //       inputRef.current = setTimeout(() => {
+  //         let newDate = new Date();
+  //         setMessageList([
+  //           ...messageList,
+  //           {
+  //             message: faker.lorem.sentence(),
+  //             author: faker.name.findName(),
+  //             id: faker.datatype.uuid(),
+  //             time: newDate.toTimeString().split(" ")[0].slice(0, -3),
+  //           },
+  //         ]);
+  //       }, 1500);
+  //       return () => clearTimeout(inputRef.current);
+  //     }
+  //   }
+  // }, [messageList.length, messageList]);
 
   const [message, setMessage] = useState("");
   const handleMessage = (e) => {
     setMessage(e.target.value);
   };
 
+  // const addMessage = (e) => {
+  //   e.preventDefault();
+  //   setMessageList([
+  //     ...messageList,
+  //     {
+  //       message,
+  //       author: "ME",
+  //       id: faker.datatype.uuid(),
+  //       time: new Date().toTimeString().split(" ")[0].slice(0, -3),
+  //     },
+  //   ]);
+  //   setMessage("");
+  // };
+
   const addMessage = (e) => {
     e.preventDefault();
-    let newDate = new Date();
-    setMessageList([
-      ...messageList,
-      {
-        message,
-        author: "ME",
-        id: faker.datatype.uuid(),
-        time: newDate.toTimeString().split(" ")[0].slice(0, -3),
-      },
-    ]);
+
+    let newMessage = {
+      message,
+      author: "ME",
+      id: faker.datatype.uuid(),
+      time: new Date().toTimeString().split(" ")[0].slice(0, -3),
+    };
+    messageList.push(newMessage);
     setMessage("");
   };
 

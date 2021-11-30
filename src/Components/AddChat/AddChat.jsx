@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import AddIcon from "@mui/icons-material/Add";
+import faker from "faker";
 
 export const AddChat = ({ chatList, setChatList }) => {
   const [newChatName, setNewChatName] = useState("");
@@ -26,7 +27,21 @@ export const AddChat = ({ chatList, setChatList }) => {
     } else if (newChatName.length === 0) {
       alert("Имя чата не может быть пустым!");
     } else {
-      setChatList([...chatList, { name: newChatName, avatar: "" }]);
+      setChatList([
+        ...chatList,
+        {
+          name: newChatName,
+          avatar: "",
+          messages: [
+            {
+              message: "Welcome to " + newChatName + " chat!",
+              author: "Welcome bot",
+              id: faker.datatype.uuid(),
+              time: new Date().toTimeString().split(" ")[0].slice(0, -3),
+            },
+          ],
+        },
+      ]);
       setNewChatName("");
     }
   };
