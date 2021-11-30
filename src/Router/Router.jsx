@@ -2,9 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { Home } from "../Screens/Home";
 import { Profile } from "../Screens/Profile";
-import { ROUTES } from "./constants";
-import react_js from "./images/chatAvatars/react_js.jpg";
-import gb_js from "./images/chatAvatars/gb-js.jpg";
+import { ROUTES, CHATS } from "./constants";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import "./Router.sass";
 import { Chats } from "../Screens/Chats";
@@ -12,13 +10,9 @@ import { ChatList } from "../Components/ChatList";
 import { AddChat } from "../Components/AddChat";
 import { SearchChats } from "../Components/SearchChats";
 
-const CHATS = [
-  { name: "React JS", avatar: react_js },
-  { name: "GB_JS", avatar: gb_js },
-];
-
 export const Router = () => {
   const [chatList, setChatList] = useState(CHATS);
+  const [messageList, setMessageList] = useState([]);
 
   const [search, setSearch] = useState("");
 
@@ -44,7 +38,14 @@ export const Router = () => {
           <Route exact path={ROUTES.PROFILE} render={() => <Profile />} />
           <Route
             path={ROUTES.CHATS}
-            render={() => <Chats chatList={chatList} />}
+            render={() => (
+              <Chats
+                chatList={chatList}
+                setChatList={setChatList}
+                messageList={messageList}
+                setMessageList={setMessageList}
+              />
+            )}
           />
           <Route>
             <Redirect to={ROUTES.HOME} />
