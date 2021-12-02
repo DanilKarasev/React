@@ -3,47 +3,33 @@ import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import AddIcon from "@mui/icons-material/Add";
 import faker from "faker";
+import "./AddChat.sass";
 
 export const AddChat = ({ chatList, setChatList }) => {
   const [newChatName, setNewChatName] = useState("");
 
-  let handleChange = (event) => {
+  const handleChange = (event) => {
     setNewChatName(event.target.value);
   };
 
   const addChat = () => {
-    let allChatNames = [];
-
-    chatList.forEach((el) => {
-      allChatNames.push(Object.values(el)[0]);
-    }); // создаем массив со всеми существующими именами чатов
-
-    const checkChatName = (arr, val) => {
-      return arr.some((arrVal) => val === arrVal);
-    }; // функция проверяющая совпадение нового имени чата с существующими
-
-    if (checkChatName(allChatNames, newChatName)) {
-      alert("Введите уникальное имя чата!");
-    } else if (newChatName.length === 0) {
-      alert("Имя чата не может быть пустым!");
-    } else {
-      setChatList([
-        ...chatList,
-        {
-          name: newChatName,
-          avatar: "",
-          messages: [
-            {
-              message: "Welcome to " + newChatName + " chat!",
-              author: "Welcome bot",
-              id: faker.datatype.uuid(),
-              time: new Date().toTimeString().split(" ")[0].slice(0, -3),
-            },
-          ],
-        },
-      ]);
-      setNewChatName("");
-    }
+    setChatList([
+      ...chatList,
+      {
+        id: faker.datatype.uuid(),
+        name: newChatName,
+        avatar: "",
+        messages: [
+          {
+            message: "Welcome to " + newChatName + " chat!",
+            author: "Welcome bot",
+            id: faker.datatype.uuid(),
+            time: new Date().toTimeString().split(" ")[0].slice(0, -3),
+          },
+        ],
+      },
+    ]);
+    setNewChatName("");
   };
 
   return (
@@ -67,7 +53,13 @@ export const AddChat = ({ chatList, setChatList }) => {
           inputProps={{ "aria-label": "Add chats" }}
         />
       </Paper>
-      <AddIcon onClick={addChat} />
+      <button
+        className={"AddChat-btn"}
+        disabled={!newChatName}
+        onClick={addChat}
+      >
+        <AddIcon />
+      </button>
     </div>
   );
 };

@@ -1,25 +1,22 @@
-import { MessageList } from "../../Components/MessageList";
+import { AddMessage } from "../../Components/AddMessage";
 import { Redirect, useParams } from "react-router-dom";
 import { ROUTES } from "../../Router/constants";
 
-export const Chats = ({ chatList, messageList, setMessageList }) => {
-  const { chatName } = useParams();
+export const Chats = ({ chatList, setChatList, filteredChats }) => {
+  const { chatId } = useParams();
+  const currentChat = chatList.find((chat) => chat.id === chatId);
 
-  let currentChat = chatList.filter((chat) => chat.name === chatName);
-
-  currentChat = currentChat[0];
-
-  if (currentChat) {
-    return (
-      <>
-        <MessageList
-          currentChat={currentChat}
-          messageList={currentChat.messages}
-          setMessageList={setMessageList}
-        />
-      </>
-    );
+  if (!currentChat) {
+    return <Redirect to={ROUTES.HOME} />;
   }
-
-  return <Redirect to={ROUTES.HOME} />;
+  return (
+    <>
+      <AddMessage
+        filteredChats={filteredChats}
+        chatList={chatList}
+        updateChatList={setChatList}
+        currentChat={currentChat}
+      />
+    </>
+  );
 };
