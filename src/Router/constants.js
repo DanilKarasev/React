@@ -5,12 +5,13 @@ import gb_js from "./images/chatAvatars/gb-js.jpg";
 export const ROUTES = {
   HOME: "/",
   PROFILE: "/profile",
-  CHATS: "/chats/:chatName",
+  CHATS: "/chats/:chatId",
   CHAT: "/chats/",
 };
 
 export const CHATS = [
   {
+    id: "id-1",
     name: "React JS",
     avatar: react_js,
     messages: [
@@ -23,6 +24,7 @@ export const CHATS = [
     ],
   },
   {
+    id: "id-2",
     name: "GB_JS",
     avatar: gb_js,
     messages: [

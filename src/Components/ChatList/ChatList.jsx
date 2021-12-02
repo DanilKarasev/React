@@ -12,12 +12,13 @@ import "./ChatList.sass";
 export const ChatList = ({ filteredChats, chatList, setChatList }) => {
   const location = useLocation();
 
-  let currentChatName = location.pathname.split("/");
-  currentChatName = currentChatName[currentChatName.length - 1]; //Имя текущего чата в виде строки
+  let currentChatId = location.pathname.split("/");
+  currentChatId = currentChatId[currentChatId.length - 1]; //Имя текущего чата в виде строки
 
-  const removeChat = (name) => {
-    const index = chatList.findIndex((el) => el.name === name);
-    chatList.splice(index, 1);
+  const removeChat = (id) => {
+    // const index = chatList.findIndex((el) => el.name === name);
+    // chatList.splice(index, 1);
+    chatList = chatList.filter((el) => el.id !== id);
     setChatList([...chatList]);
   };
 
@@ -32,10 +33,10 @@ export const ChatList = ({ filteredChats, chatList, setChatList }) => {
           </ListSubheader>
         }
       >
-        {filteredChats.map(({ name, avatar }) => (
-          <Link key={name} to={ROUTES.CHAT + name}>
+        {filteredChats.map(({ id, name, avatar }) => (
+          <Link key={id} to={ROUTES.CHAT + id}>
             <ListItemButton
-              selected={name === currentChatName}
+              selected={id === currentChatId}
               sx={{ gap: "10px" }}
             >
               <Avatar alt={name} src={avatar}>
@@ -43,7 +44,7 @@ export const ChatList = ({ filteredChats, chatList, setChatList }) => {
               </Avatar>
               <ListItemText primary={name} />
               <DeleteIcon
-                onClick={() => removeChat(name)}
+                onClick={() => removeChat(id)}
                 className={"Delete-icon"}
               />
             </ListItemButton>

@@ -12,10 +12,8 @@ import { SearchChats } from "../Components/SearchChats";
 
 export const Router = () => {
   const [chatList, setChatList] = useState(CHATS);
-  const [messageList, setMessageList] = useState([]);
 
   const [search, setSearch] = useState("");
-
   const filteredChats = chatList.filter((chat) => {
     return chat.name.toLowerCase().includes(search.toLowerCase());
   });
@@ -40,10 +38,9 @@ export const Router = () => {
             path={ROUTES.CHATS}
             render={() => (
               <Chats
+                filteredChats={filteredChats}
                 chatList={chatList}
                 setChatList={setChatList}
-                messageList={messageList}
-                setMessageList={setMessageList}
               />
             )}
           />
