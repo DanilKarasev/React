@@ -1,29 +1,3 @@
-* form, button, img, input
-  margin: 0
-  padding: 0
-  border: 0
-  outline: none
-
-.Chat-header
-  background-color: white
-  color: #3390ec
-  font-size: 24px
-  font-weight: 600
-  height: 46px
-  padding: 4px 4px 4px 8px
-  border-bottom: 1px solid #dfe1e5
-
-.Chat
-  display: flex
-  flex-direction: column
-  background: rgb(144,149,0)
-  background: radial-gradient(circle, #909504 -114%, #62AA01 -97%, #B5AC5F 86%)
-  background-position: bottom 300px right 320px
-  width: 600px
-  height: 100vh
-  flex-grow: 1
-  border-left: 1px solid #dfe1e5
-
 .Chat-body
   display: flex
   flex-direction: column
@@ -34,44 +8,13 @@
   width: 60%
   max-width: 720px
   margin: 0 auto
-
-.Chat-footer
-  width: 60%
-  min-width: 300px
-  margin: 0 auto
-  font-size: 24px
-  font-weight: 600
-  padding: 1vh
-  border-radius: 0 0 20px 20px
-  form
-    display: flex
-    align-items: center
-    justify-content: center
-    input
-      align-items: center
-      resize: none
-      border-radius: 20px
-      padding-left: 4%
-      flex-grow: 1
-      font-size: 16px
-      height: 45px
-      margin-right: 15px
-      word-wrap: break-word
-      &:focus
-        border: none
-    button
-      width: 45px
-      height: 45px
-      border-radius: 50%
-      background-image: url("sendMessage.png")
-      background-repeat: no-repeat
-      background-position: center
-      transition: all .3s ease
-      cursor: pointer
-      &:hover
-        filter: brightness(120%)
-      &:active
-        filter: brightness(50%)
+  &::-webkit-scrollbar
+    width: 6px
+    background-color: transparent
+  &::-webkit-scrollbar-thumb
+    height: 50px
+    background-color: rgba(223,225,229, 0.3)
+    border-radius: 20px
 
 .Message
   box-sizing: border-box
@@ -82,6 +25,8 @@
   padding: 1%
   max-width: 480px
   text-align: left
+  align-self: flex-start
+  word-break: break-all
   &-me
     align-self: flex-end
     background-color: #eeffde
@@ -92,13 +37,10 @@
     display: flex
     gap: 10px
   &-text
-    word-wrap: break-word
     flex-grow: 1
   &-time
     color: #707579
     height: 12px
     font-size: 12px
     align-self: flex-end
-
-
-
+    word-break: keep-all
