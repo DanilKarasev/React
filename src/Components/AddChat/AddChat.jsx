@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
-import AddIcon from "@mui/icons-material/Add";
-import faker from "faker";
 import "./AddChat.sass";
+import { addChatAction } from "../../Store/Chats/actions";
+import faker from "faker";
+import { addMessageAction } from "../../Store/Messages/actions";
 
-export const AddChat = ({ chatList, setChatList }) => {
+export const AddChat = ({ dispatch }) => {
   const [newChatName, setNewChatName] = useState("");
 
   const handleChange = (event) => {
@@ -13,22 +14,22 @@ export const AddChat = ({ chatList, setChatList }) => {
   };
 
   const addChat = () => {
-    setChatList([
-      ...chatList,
-      {
-        id: faker.datatype.uuid(),
-        name: newChatName,
-        avatar: "",
-        messages: [
-          {
-            message: "Welcome to " + newChatName + " chat!",
-            author: "Welcome bot",
-            id: faker.datatype.uuid(),
-            time: new Date().toTimeString().split(" ")[0].slice(0, -3),
-          },
-        ],
-      },
-    ]);
+    const newChatId = faker.datatype.uuid();
+    dispatch(
+      addChatAction({ newChatName, newChatId }),
+      addMessageAction({
+        newChatId,
+        messageAuthor: "Welcome Bot",
+        message: `Welcome to ${newChatName} chat!`,
+      })
+    );
+    dispatch(
+      addMessageAction({
+        chatId: newChatId,
+        messageAuthor: "Welcome Bot",
+        message: `Welcome to ${newChatName} chat!`,
+      })
+    );
     setNewChatName("");
   };
 
@@ -58,7 +59,7 @@ export const AddChat = ({ chatList, setChatList }) => {
         disabled={!newChatName}
         onClick={addChat}
       >
-        <AddIcon />
+        +
       </button>
     </div>
   );

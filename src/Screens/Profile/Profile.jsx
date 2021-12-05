@@ -1,22 +1,48 @@
 import "./Profile.sass";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleProfileInfoAction } from "../../Store/Profile/actions";
-import { profileSelector } from "./selectors";
-import { Switch } from "@mui/material";
+import {
+  changeProfileNameAction,
+  toggleProfileInfoAction,
+} from "../../Store/Profile/actions";
+import { profileSelector } from "../../Store/Profile/selectors";
+import { Switch, Button, TextField } from "@mui/material";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import { useState } from "react";
+import styled, { keyframes } from "styled-components";
+import { fadeIn } from "react-animations";
+
+const FadeIn = styled.div`
+  animation: 1s ${keyframes`${fadeIn}`};
+`;
 
 export const Profile = () => {
   const dispatch = useDispatch();
-  const { profileInfo, showProfileInfo } = useSelector(profileSelector);
+  const { registerMessage, showProfileInfo, profileName } =
+    useSelector(profileSelector);
+
+  const [inputProfileName, setInputProfileName] = useState("");
+
+  const handleProfileName = (e) => {
+    setInputProfileName(e.target.value);
+  };
 
   const handleToggleShowProfileInfo = () => {
     dispatch(toggleProfileInfoAction());
   };
 
+  const handleProfileNameChange = (e) => {
+    e.preventDefault();
+    dispatch(
+      changeProfileNameAction({
+        profileName: inputProfileName,
+      })
+    );
+  };
+
   return (
     <div className={"Profile"}>
-      <div className={"Profile-header"}>Profile name</div>
+      <div className={"Profile-header"}>{profileName}</div>
       <div className={"Profile-main"}>
         <FormGroup>
           <FormControlLabel
@@ -29,7 +55,20 @@ export const Profile = () => {
             }
             label="Show profile info"
           />
+          <form className={"Profile-form"} onSubmit={handleProfileNameChange}>
+            <TextField
+              value={inputProfileName}
+              onChange={handleProfileName}
+              id="outlined-basic"
+              label="Your name"
+              variant="outlined"
+            />
+            <Button type={"submit"} disabled={!inputProfileName}>
+              Register
+            </Button>
+          </form>
         </FormGroup>
+
         <div className={"Profile-info"}>
           <div
             className={
@@ -38,7 +77,11 @@ export const Profile = () => {
                 : "Profile-info-content__hidden"
             }
           >
-            {showProfileInfo && profileInfo}
+            {profileName ? (
+              <FadeIn>Welcome {profileName}!</FadeIn>
+            ) : (
+              <FadeIn>{registerMessage}</FadeIn>
+            )}
           </div>
         </div>
       </div>

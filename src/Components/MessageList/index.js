@@ -1,3 +1,3 @@
-import { MessageList } from "./AddMessage";
+import { MessageList } from "./MessageList";
 
 export { MessageList };

@@ -39,13 +39,33 @@
     align-items: center
     justify-content: center
     background: white
-    width: 80%
+    width: 87%
     border-radius: 25px
-    transition: all 0.3s ease-in-out
+    transition: opacity 0.5s ease
     visibility: visible
     opacity: 1
     &__hidden
-      transition: all 0.3s ease-in-out
-      width: 0
+      width: 87%
+      transition: opacity 0.5s ease
+      opacity: 0
       visibility: hidden
 
+.Profile-form
+  background-color: white
+  display: flex
+  flex-direction: column
+  padding: 10px
+  border-radius: 20px
+  margin-top: 15%
+  gap: 20px
+  .css-1d1r5q-MuiFormHelperText-root
+    text-align: center
+
+.Welcome-message
+  transition: opacity 0.3s ease
+  opacity: 0
+  visibility: hidden
+  &_mounted
+    transition: opacity 0.3s ease
+    opacity: 1
+    visibility: visible
