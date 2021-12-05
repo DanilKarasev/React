@@ -1,22 +1,46 @@
-import { AddMessage } from "../../Components/AddMessage";
+import React from "react";
 import { Redirect, useParams } from "react-router-dom";
 import { ROUTES } from "../../Router/constants";
+import { useSelector } from "react-redux";
+import { chatListSelector } from "../../Store/Chats/selectors";
+import { MessageList } from "../../Components/MessageList";
+import { AddMessage } from "../../Components/AddMessage";
+import Avatar from "@mui/material/Avatar";
+import "./Chats.sass";
+import { profileSelector } from "../../Store/Profile/selectors";
+import { messageListSelector } from "../../Store/Messages/selectors";
 
-export const Chats = ({ chatList, setChatList, filteredChats }) => {
+export const Chats = () => {
   const { chatId } = useParams();
+  const messageList = useSelector(messageListSelector);
+  const chatList = Object.values(useSelector(chatListSelector));
   const currentChat = chatList.find((chat) => chat.id === chatId);
+
+  let messageAuthor = "ME";
+  const { profileName } = useSelector(profileSelector);
+  if (profileName) {
+    messageAuthor = profileName;
+  }
 
   if (!currentChat) {
     return <Redirect to={ROUTES.HOME} />;
   }
   return (
-    <>
-      <AddMessage
-        filteredChats={filteredChats}
-        chatList={chatList}
-        updateChatList={setChatList}
-        currentChat={currentChat}
+    <div className={"Chat"}>
+      <div className="Chat-header">
+        <Avatar alt={currentChat.name} src={currentChat.avatar} />
+        <h4>{currentChat.name}</h4>{" "}
+      </div>
+      <MessageList
+        messageList={messageList}
+        chatId={chatId}
+        messageAuthor={messageAuthor}
       />
-    </>
+      <AddMessage
+        messageList={messageList}
+        chatId={chatId}
+        messageAuthor={messageAuthor}
+      />
+    </div>
   );
 };
