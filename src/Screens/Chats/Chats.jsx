@@ -5,10 +5,10 @@ import { useSelector } from "react-redux";
 import { chatListSelector } from "../../Store/Chats/selectors";
 import { MessageList } from "../../Components/MessageList";
 import { AddMessage } from "../../Components/AddMessage";
-import Avatar from "@mui/material/Avatar";
-import "./Chats.sass";
 import { profileSelector } from "../../Store/Profile/selectors";
 import { messageListSelector } from "../../Store/Messages/selectors";
+import Avatar from "@mui/material/Avatar";
+import "./Chats.sass";
 
 export const Chats = () => {
   const { chatId } = useParams();
