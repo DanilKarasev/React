@@ -4,6 +4,7 @@ import Avatar from "@mui/material/Avatar";
 import Paper from "@mui/material/Paper";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
+import "./SearchChats.sass";
 
 export const SearchChats = ({ setSearch }) => {
   return (
