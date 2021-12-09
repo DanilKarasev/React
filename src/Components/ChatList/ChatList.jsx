@@ -1,19 +1,19 @@
-import ListSubheader from "@mui/material/ListSubheader";
-import { Link, useLocation } from "react-router-dom";
 import { ROUTES } from "../../Router/constants";
+import { useDispatch, useSelector } from "react-redux";
+import { chatListSelector } from "../../Store/Chats/selectors";
+import { SearchChats } from "../SearchChats";
+import { deleteChatAction } from "../../Store/Chats/actions";
+import { deleteMessageListAction } from "../../Store/Messages/actions";
+import { Link, useLocation } from "react-router-dom";
+import ListSubheader from "@mui/material/ListSubheader";
 import ListItemButton from "@mui/material/ListItemButton";
 import Avatar from "@mui/material/Avatar";
 import ListItemText from "@mui/material/ListItemText";
 import List from "@mui/material/List";
-import DeleteIcon from "@mui/icons-material/Delete";
 import React, { useState } from "react";
 import "./ChatList.sass";
-import { useDispatch, useSelector } from "react-redux";
-import { chatListSelector } from "../../Store/Chats/selectors";
-import { SearchChats } from "../SearchChats";
-import { AddChat } from "../AddChat";
-import { deleteChatAction } from "../../Store/Chats/actions";
-import { deleteMessageListAction } from "../../Store/Messages/actions";
+import { ContextMenu, ContextMenuTrigger } from "react-contextmenu";
+import { Button } from "@mui/material";
 
 export const ChatList = () => {
   const location = useLocation();
@@ -48,24 +48,30 @@ export const ChatList = () => {
         >
           {filteredChats.map(({ id, name, avatar }) => (
             <Link key={id} to={ROUTES.CHAT + id}>
-              <ListItemButton
-                selected={id === currentChatId}
-                sx={{ gap: "10px" }}
-              >
-                <Avatar alt={name} src={avatar}>
-                  {name[0]}
-                </Avatar>
-                <ListItemText primary={name} />
-                <DeleteIcon
+              <ContextMenuTrigger id={id}>
+                <ListItemButton
+                  selected={id === currentChatId}
+                  sx={{ gap: "10px" }}
+                >
+                  <Avatar alt={name} src={avatar}>
+                    {name[0]}
+                  </Avatar>
+                  <ListItemText primary={name} />
+                </ListItemButton>
+              </ContextMenuTrigger>
+              <ContextMenu id={id}>
+                <Button
+                  data={{ foo: "bar" }}
+                  color="error"
                   onClick={() => removeChat(id)}
-                  className={"Delete-icon"}
-                />
-              </ListItemButton>
+                >
+                  DELETE CHAT
+                </Button>
+              </ContextMenu>
             </Link>
           ))}
         </List>
       </div>
-      <AddChat dispatch={dispatch} />
     </>
   );
 };
