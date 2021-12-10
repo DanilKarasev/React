@@ -1,4 +1,4 @@
-import { ADD_MESSAGE_ACTION, DELETE_MESSAGE_LIST_ACTION } from "./constants";
+import { ADD_MESSAGE_ACTION, DELETE_CHAT_MESSAGES_ACTION } from "./constants";
 import faker from "faker";
 
 const initialState = {
@@ -45,12 +45,11 @@ export const messageListReducer = (state = initialState, action) => {
       };
     }
 
-    case DELETE_MESSAGE_LIST_ACTION: {
-      const messageList = { ...state };
-      delete messageList[action.payload.id];
-      return {
-        ...messageList,
-      };
+    case DELETE_CHAT_MESSAGES_ACTION: {
+      const { id } = action.payload;
+      const { [id]: chatMessagesToDelete, ...restChatMessages } =
+        state.messageList;
+      return { ...state, messageList: { ...restChatMessages } };
     }
     default:
       return state;

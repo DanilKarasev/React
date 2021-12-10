@@ -1,24 +1,20 @@
 import "./MessageList.sass";
-import { useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
+import { messageListSelector } from "../../Store/Messages/selectors";
+import { useSpring, animated } from "react-spring";
 
-export const MessageList = ({ chatId, messageAuthor, messageList }) => {
-  const messageBox = useRef(null);
-
-  useEffect(() => {
-    if (messageList[chatId]) {
-      messageBox.current.scrollIntoView();
-    }
-  }, [messageList]);
+export const MessageList = ({ chatId, messageAuthor }) => {
+  const messageList = useSelector(messageListSelector);
+  const props = useSpring({ to: { opacity: 1 }, from: { opacity: 0 } });
 
   return (
-    <div className={"Chat-body"}>
+    <animated.div style={props} className={"Chat-body"}>
       {messageList[chatId]?.map(({ message, author, id, time }) => (
         <div
           key={id}
           className={
             author === messageAuthor ? "Message Message-me" : "Message"
           }
-          ref={messageBox}
         >
           <h4>{author}</h4>
           <div className={"Message-box"}>
@@ -27,6 +23,6 @@ export const MessageList = ({ chatId, messageAuthor, messageList }) => {
           </div>
         </div>
       ))}
-    </div>
+    </animated.div>
   );
 };
