@@ -17,25 +17,6 @@ export const AddMessage = ({ chatId, messageAuthor }) => {
     setMessage("");
   };
 
-  // useEffect(() => {
-  //   if (
-  //     messageList[chatId]?.length &&
-  //     messageList[chatId][messageList[chatId].length - 1].author ===
-  //       messageAuthor
-  //   ) {
-  //     inputRef.current = setTimeout(() => {
-  //       dispatch(
-  //         addMessageAction({
-  //           chatId,
-  //           messageAuthor: faker.name.findName(),
-  //           message: faker.lorem.sentence(),
-  //         })
-  //       );
-  //     }, 1500);
-  //     return () => clearTimeout(inputRef.current);
-  //   }
-  // }, [messageList]);
-
   return (
     <div className={"Add-message"}>
       <form onSubmit={addMessage}>
