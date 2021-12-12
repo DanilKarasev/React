@@ -5,10 +5,13 @@ import { useSpring, animated } from "react-spring";
 
 export const MessageList = ({ chatId, messageAuthor }) => {
   const messageList = useSelector(messageListSelector);
-  const props = useSpring({ to: { opacity: 1 }, from: { opacity: 0 } });
+  const animationStyle = useSpring({
+    to: { opacity: 1 },
+    from: { opacity: 0 },
+  });
 
   return (
-    <animated.div style={props} className={"Chat-body"}>
+    <animated.div style={animationStyle} className={"Chat-body"}>
       {messageList[chatId]?.map(({ message, author, id, time }) => (
         <div
           key={id}
