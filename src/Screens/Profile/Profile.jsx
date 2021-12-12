@@ -5,12 +5,7 @@ import { profileSelector } from "../../Store/Profile/selectors";
 import { Button, TextField } from "@mui/material";
 import FormGroup from "@mui/material/FormGroup";
 import { useState } from "react";
-import styled, { keyframes } from "styled-components";
-import { fadeIn } from "react-animations";
-
-const FadeIn = styled.div`
-  animation: 1s ${keyframes`${fadeIn}`};
-`;
+import { useSpring, animated } from "react-spring";
 
 export const Profile = () => {
   const dispatch = useDispatch();
@@ -31,8 +26,13 @@ export const Profile = () => {
     );
   };
 
+  const animationStyle = useSpring({
+    to: { marginLeft: 0 },
+    from: { marginLeft: 700 },
+  });
+
   return (
-    <div className={"Profile"}>
+    <animated.div style={animationStyle} className={"Profile"}>
       <div className={"Profile-header"}>
         {profileName ? `Welcome ${profileName}!` : "Please register"}
       </div>
@@ -54,14 +54,10 @@ export const Profile = () => {
 
         <div className={"Profile-info"}>
           <div className={"Profile-info-content"}>
-            {profileName ? (
-              <FadeIn>Welcome {profileName}!</FadeIn>
-            ) : (
-              <FadeIn>Please register first</FadeIn>
-            )}
+            {profileName ? `Welcome ${profileName}!` : "Please register first"}
           </div>
         </div>
       </div>
-    </div>
+    </animated.div>
   );
 };

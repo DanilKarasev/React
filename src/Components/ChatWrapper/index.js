@@ -1,3 +1,3 @@
-import { ChatWrapper } from "./Chats";
+import { ChatWrapper } from "./ChatWrapper";
 
 export { ChatWrapper };
