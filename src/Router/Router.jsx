@@ -5,16 +5,13 @@ import { ROUTES } from "./constants";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import "./Router.sass";
 import { Chats } from "../Screens/Chats";
-import { ChatList } from "../Components/ChatList";
+import { ChatWrapper } from "../Components/ChatWrapper";
 
 export const Router = () => {
   return (
     <BrowserRouter>
       <div className={"Container"}>
-        <div className={"Chat-wrapper"}>
-          <ChatList />
-        </div>
-
+        <ChatWrapper />
         <Switch>
           <Route exact path={ROUTES.HOME} render={() => <Home />} />
           <Route exact path={ROUTES.PROFILE} render={() => <Profile />} />

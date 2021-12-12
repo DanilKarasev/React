@@ -28,13 +28,9 @@ export const chatsReducer = (state = initialState, action) => {
       };
     }
     case DELETE_CHAT_ACTION: {
-      const chatList = { ...state };
-      delete chatList[action.payload.id];
-      // Это конечно ни разу не изящно, но просто интересно насколько валидно...
-      // Думаю что скорее всего в дальнейшем могут быть проблемы, если возвращать не state, но зато гораздо короче чем заморачиваться с переводом в массив
-      return {
-        ...chatList,
-      };
+      const { id } = action.payload;
+      const { [id]: chatToDelete, ...restChats } = state;
+      return restChats;
     }
     default:
       return state;

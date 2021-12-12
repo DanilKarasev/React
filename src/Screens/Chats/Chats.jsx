@@ -5,14 +5,13 @@ import { useSelector } from "react-redux";
 import { chatListSelector } from "../../Store/Chats/selectors";
 import { MessageList } from "../../Components/MessageList";
 import { AddMessage } from "../../Components/AddMessage";
+import { profileSelector } from "../../Store/Profile/selectors";
 import Avatar from "@mui/material/Avatar";
 import "./Chats.sass";
-import { profileSelector } from "../../Store/Profile/selectors";
-import { messageListSelector } from "../../Store/Messages/selectors";
 
 export const Chats = () => {
   const { chatId } = useParams();
-  const messageList = useSelector(messageListSelector);
+
   const chatList = Object.values(useSelector(chatListSelector));
   const currentChat = chatList.find((chat) => chat.id === chatId);
 
@@ -31,16 +30,8 @@ export const Chats = () => {
         <Avatar alt={currentChat.name} src={currentChat.avatar} />
         <h4>{currentChat.name}</h4>{" "}
       </div>
-      <MessageList
-        messageList={messageList}
-        chatId={chatId}
-        messageAuthor={messageAuthor}
-      />
-      <AddMessage
-        messageList={messageList}
-        chatId={chatId}
-        messageAuthor={messageAuthor}
-      />
+      <MessageList chatId={chatId} messageAuthor={messageAuthor} />
+      <AddMessage chatId={chatId} messageAuthor={messageAuthor} />
     </div>
   );
 };
