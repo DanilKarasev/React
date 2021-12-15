@@ -5,9 +5,11 @@ import createSagaMiddleware from "redux-saga";
 import { profileReducer } from "./Profile/reducer";
 import { chatsReducer } from "./Chats/reducer";
 import { messageListReducer } from "./Messages/reducer";
-import addMessageSaga from "../Middlewares/Saga/addMessageSaga";
 import dictionaryReducer from "./Dictionary/reducer";
-import dictionarySaga from "../Middlewares/Saga/dictionarySaga";
+import addMessageWithSaga from "./Messages/sagas";
+import authReducer from "./Auth/reducer";
+import fetchWordData from "./Dictionary/sagas";
+import authRootSaga from "./Auth/sagas";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -21,6 +23,7 @@ const rootReducer = combineReducers({
   chats: chatsReducer,
   messages: messageListReducer,
   dictionary: dictionaryReducer,
+  auth: authReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -34,5 +37,6 @@ export const store = createStore(
 
 export const persistor = persistStore(store);
 
-sagaMiddleware.run(addMessageSaga);
-sagaMiddleware.run(dictionarySaga);
+sagaMiddleware.run(addMessageWithSaga);
+sagaMiddleware.run(fetchWordData);
+sagaMiddleware.run(authRootSaga);
