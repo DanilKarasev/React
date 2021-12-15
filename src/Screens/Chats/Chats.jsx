@@ -8,6 +8,7 @@ import { AddMessage } from "../../Components/AddMessage";
 import { profileSelector } from "../../Store/Profile/selectors";
 import Avatar from "@mui/material/Avatar";
 import "./Chats.sass";
+import { ChatWrapper } from "../../Components/ChatWrapper";
 
 export const Chats = () => {
   const { chatId } = useParams();
@@ -25,13 +26,16 @@ export const Chats = () => {
     return <Redirect to={ROUTES.HOME} />;
   }
   return (
-    <div className={"Chat"}>
-      <div className="Chat-header">
-        <Avatar alt={currentChat.name} src={currentChat.avatar} />
-        <h4>{currentChat.name}</h4>{" "}
+    <div className={"Container"}>
+      <ChatWrapper />
+      <div className={"Chat"}>
+        <div className="Chat-header">
+          <Avatar alt={currentChat.name} src={currentChat.avatar} />
+          <h4>{currentChat.name}</h4>{" "}
+        </div>
+        <MessageList chatId={chatId} messageAuthor={messageAuthor} />
+        <AddMessage chatId={chatId} messageAuthor={messageAuthor} />
       </div>
-      <MessageList chatId={chatId} messageAuthor={messageAuthor} />
-      <AddMessage chatId={chatId} messageAuthor={messageAuthor} />
     </div>
   );
 };
