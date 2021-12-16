@@ -14,16 +14,11 @@ import { authSelector } from "../Store/Auth/selectors";
 
 export const Router = () => {
   const { loading } = useSelector(authSelector);
-
-  // const [loading, setLoading] = useState(true);
-  // const handleInitFirebaseAuth = async () => {
-  //   await firebase.auth().onAuthStateChanged((user) => {
-  //     setLoading(false);
-  //   });
-  // };
+  // Если без localStorage
+  // const dispatch = useDispatch();
   // useEffect(() => {
-  //   handleInitFirebaseAuth();
-  // }, []);
+  //   dispatch(getUser());
+  // }, [dispatch]);
 
   if (loading) {
     return (

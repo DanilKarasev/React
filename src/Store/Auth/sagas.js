@@ -3,11 +3,11 @@ import {
   loginWithEmailFailure,
   registerWithEmailSuccess,
   registerWithEmailFailure,
-  syncUser,
   logoutSuccess,
   logoutFailure,
+  getUserResolved,
 } from "./actions";
-import { call, put, takeEvery, fork } from "redux-saga/effects";
+import { call, put, takeEvery } from "redux-saga/effects";
 import { AUTH } from "./constants";
 import firebase from "firebase";
 
@@ -54,30 +54,25 @@ function* logoutSaga() {
   }
 }
 
-function* syncUserSaga() {
+function* getUserSaga() {
   function onAuthStateChanged() {
     return new Promise((resolve) => {
       firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-          resolve(user);
-        } else {
-          return null;
-        }
+        resolve(user);
       });
     });
   }
   const user = yield call(onAuthStateChanged);
-
-  if (user) {
-    yield put(syncUser(user));
-  } else {
-    yield put(syncUser(null));
-  }
+  yield put(getUserResolved(user));
 }
 
 export default function* authRootSaga() {
-  yield fork(syncUserSaga);
+  yield takeEvery(AUTH.GET_USER.REQUEST, getUserSaga);
   yield takeEvery(AUTH.LOGIN_WITH_EMAIL.REQUEST, loginWithEmailSaga);
   yield takeEvery(AUTH.REGISTER_WITH_EMAIL.REQUEST, registerWithEmailSaga);
+  yield takeEvery(
+    [AUTH.REGISTER_WITH_EMAIL.SUCCESS, AUTH.LOGIN_WITH_EMAIL.SUCCESS],
+    getUserSaga
+  );
   yield takeEvery(AUTH.LOGOUT.REQUEST, logoutSaga);
 }

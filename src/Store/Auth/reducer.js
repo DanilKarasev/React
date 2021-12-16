@@ -13,6 +13,7 @@ const authReducer = (state = initialState, action) => {
     case AUTH.LOGIN_WITH_EMAIL.REQUEST:
     case AUTH.REGISTER_WITH_EMAIL.REQUEST:
     case AUTH.LOGOUT.REQUEST:
+    case AUTH.GET_USER.REQUEST:
       return {
         ...state,
         loading: true,
@@ -20,17 +21,15 @@ const authReducer = (state = initialState, action) => {
       };
     case AUTH.LOGIN_WITH_EMAIL.SUCCESS:
     case AUTH.REGISTER_WITH_EMAIL.SUCCESS:
-    case AUTH.UPDATE_USER_NAME.SUCCESS:
       return {
+        ...state,
         loading: false,
-        loggedIn: true,
         userId: action.credential.user.uid,
         message: null,
       };
     case AUTH.LOGIN_WITH_EMAIL.FAILURE:
     case AUTH.REGISTER_WITH_EMAIL.FAILURE:
     case AUTH.LOGOUT.FAILURE:
-    case AUTH.UPDATE_USER_NAME.FAILURE:
       return {
         ...state,
         loading: false,
@@ -39,12 +38,14 @@ const authReducer = (state = initialState, action) => {
     case AUTH.LOGOUT.SUCCESS:
       return {
         ...state,
+        user: null,
         loading: false,
         loggedIn: false,
       };
-    case AUTH.SYNC_USER:
+    case AUTH.GET_USER.RESOLVED:
       return {
         ...state,
+        loading: false,
         loggedIn: action.user != null,
         user: action.user,
       };

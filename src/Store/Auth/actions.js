@@ -46,7 +46,11 @@ export const logoutFailure = (error) => ({
   error,
 });
 
-export const syncUser = (user) => ({
-  type: AUTH.SYNC_USER,
+// export const getUser = () => ({
+//   type: AUTH.GET_USER.REQUEST,
+// });
+
+export const getUserResolved = (user) => ({
+  type: AUTH.GET_USER.RESOLVED,
   user,
 });
