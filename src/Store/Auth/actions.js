@@ -46,7 +46,6 @@ export const logoutFailure = (error) => ({
   error,
 });
 
-//Без localStorage
 export const getUser = () => ({
   type: AUTH.GET_USER.REQUEST,
 });

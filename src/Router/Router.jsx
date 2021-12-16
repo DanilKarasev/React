@@ -17,7 +17,6 @@ import { getUser } from "../Store/Auth/actions";
 export const Router = () => {
   const { loading } = useSelector(authSelector);
 
-  // Если без localStorage
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUser());
