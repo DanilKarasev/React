@@ -9,16 +9,19 @@ import "./Router.sass";
 import { CircularProgress } from "@mui/material";
 import { PrivateRoute } from "../Components/PrivateRoute";
 import { PublicRoute } from "../Components/PublicRoute";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { authSelector } from "../Store/Auth/selectors";
+import { useEffect } from "react";
+import { getUser } from "../Store/Auth/actions";
 
 export const Router = () => {
   const { loading } = useSelector(authSelector);
+
   // Если без localStorage
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(getUser());
-  // }, [dispatch]);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getUser());
+  }, [dispatch]);
 
   if (loading) {
     return (
