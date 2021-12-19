@@ -9,7 +9,7 @@ import { loginWithEmail } from "../../Store/Auth/actions";
 import { signInAnimationStyle } from "../../Components/Animations/animations";
 
 export const SignIn = () => {
-  const { loading, message } = useSelector(authSelector);
+  const { loading, error } = useSelector(authSelector);
   const dispatch = useDispatch();
   const signInAnimationStyleSpring = useSpring(signInAnimationStyle);
 
@@ -65,7 +65,7 @@ export const SignIn = () => {
             </Button>
           </form>
           <div className={"Error"}>
-            {message} {loading && <CircularProgress />}
+            {error?.login} {loading && <CircularProgress />}
           </div>
         </div>
         <div className={"Register-main"}>

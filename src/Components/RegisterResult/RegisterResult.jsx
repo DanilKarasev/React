@@ -3,17 +3,17 @@ import { useSelector } from "react-redux";
 import { authSelector } from "../../Store/Auth/selectors";
 
 export const RegisterResult = () => {
-  const { loading, message } = useSelector(authSelector);
-  if (loading) {
+  const { registerEventLoading, error } = useSelector(authSelector);
+  if (registerEventLoading) {
     return (
       <div className={"Result"}>
         <CircularProgress />
       </div>
     );
-  } else if (message) {
+  } else if (error) {
     return (
       <div className={"Result"}>
-        <div className={"Error"}>{message}</div>
+        <div className={"Error"}>{error?.register}</div>
       </div>
     );
   } else return <div className={"Result"}> </div>;
