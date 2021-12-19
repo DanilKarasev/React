@@ -16,9 +16,10 @@ export const loginWithEmailFailure = (error) => ({
   error,
 });
 
-export const registerWithEmail = (userName, email, password) => ({
+export const registerWithEmail = (userName, phone, email, password) => ({
   type: AUTH.REGISTER_WITH_EMAIL.REQUEST,
   userName,
+  phone,
   email,
   password,
 });
@@ -53,4 +54,18 @@ export const getUser = () => ({
 export const getUserResolved = (user) => ({
   type: AUTH.GET_USER.RESOLVED,
   user,
+});
+
+export const createUserDb = (payload) => ({
+  type: AUTH.CREATE_USER_DB.REQUEST,
+  payload,
+});
+
+export const createUserDbSuccess = () => ({
+  type: AUTH.CREATE_USER_DB.SUCCESS,
+});
+
+export const createUserDbFailure = (error) => ({
+  type: AUTH.CREATE_USER_DB.FAILURE,
+  error,
 });

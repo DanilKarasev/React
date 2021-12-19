@@ -7,16 +7,21 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { registerWithEmail } from "../../Store/Auth/actions";
 import { RegisterResult } from "../RegisterResult";
+import InputMask from "react-input-mask";
 import { modalAnimation } from "../Animations/animations";
 
 export const Register = ({ open, close }) => {
   const dispatch = useDispatch();
   const [userName, setUserName] = useState("");
+  const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleChangeUserName = (event) => {
     setUserName(event.target.value);
+  };
+  const handleChangePhone = (event) => {
+    setPhone(event.target.value);
   };
   const handleChangeEmail = (event) => {
     setEmail(event.target.value);
@@ -27,7 +32,7 @@ export const Register = ({ open, close }) => {
 
   const handleRegisterNewUser = (e) => {
     e.preventDefault();
-    dispatch(registerWithEmail(userName, email, password));
+    dispatch(registerWithEmail(userName, phone, email, password));
   };
 
   return (
@@ -57,6 +62,21 @@ export const Register = ({ open, close }) => {
                 id="outlined-required"
                 label="User name"
               />
+
+              <InputMask
+                value={phone}
+                onChange={handleChangePhone}
+                mask="+7(999) 999 99 99"
+                maskChar=" "
+              >
+                {() => (
+                  <TextField
+                    type={"text"}
+                    id="outlined-required"
+                    label="Phone number"
+                  />
+                )}
+              </InputMask>
               <TextField
                 value={email}
                 onChange={handleChangeEmail}

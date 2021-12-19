@@ -6,6 +6,8 @@ import {
   logoutSuccess,
   logoutFailure,
   getUserResolved,
+  createUserDb,
+  createUserDbFailure,
 } from "./actions";
 import { call, put, takeEvery } from "redux-saga/effects";
 import { AUTH } from "./constants";
@@ -25,6 +27,15 @@ function* loginWithEmailSaga(payload) {
   }
 }
 
+function* logoutSaga() {
+  try {
+    const data = yield call([firebase.auth(), firebase.auth().signOut]);
+    yield put(logoutSuccess(data));
+  } catch (error) {
+    yield put(logoutFailure(error));
+  }
+}
+
 function* registerWithEmailSaga(payload) {
   try {
     const result = yield call(
@@ -32,25 +43,33 @@ function* registerWithEmailSaga(payload) {
       payload.email,
       payload.password
     );
-    yield call(
-      firebase.auth().onAuthStateChanged(() => {
-        firebase.auth().currentUser.updateProfile({
-          displayName: payload.userName,
-        });
-      })
-    );
+    // yield call(
+    //   firebase.auth().onAuthStateChanged(() => {
+    //     firebase.auth().currentUser.updateProfile({
+    //       displayName: payload.userName,
+    //     });
+    //   })
+    // );
+    //тут просто изменяем displayName, но корректно это не работает
+
     yield put(registerWithEmailSuccess(result));
+    yield put(createUserDb(payload));
   } catch (error) {
     yield put(registerWithEmailFailure(error));
   }
 }
 
-function* logoutSaga() {
+function* createUserDbSaga({ payload }) {
   try {
-    const data = yield call([firebase.auth(), firebase.auth().signOut]);
-    yield put(logoutSuccess(data));
+    const id = firebase.auth().currentUser.uid;
+    const profileDatabase = (path, payload) => {
+      firebase.database().ref("profile").child(id).child(path).set(payload);
+    };
+    yield call(profileDatabase, "userName", payload.userName);
+    yield call(profileDatabase, "email", payload.email);
+    yield call(profileDatabase, "phone", payload.phone);
   } catch (error) {
-    yield put(logoutFailure(error));
+    yield put(createUserDbFailure(error));
   }
 }
 
@@ -67,12 +86,16 @@ function* getUserSaga() {
 }
 
 export default function* authRootSaga() {
-  yield takeEvery(AUTH.GET_USER.REQUEST, getUserSaga);
-  yield takeEvery(AUTH.LOGIN_WITH_EMAIL.REQUEST, loginWithEmailSaga);
-  yield takeEvery(AUTH.REGISTER_WITH_EMAIL.REQUEST, registerWithEmailSaga);
   yield takeEvery(
-    [AUTH.REGISTER_WITH_EMAIL.SUCCESS, AUTH.LOGIN_WITH_EMAIL.SUCCESS],
+    [
+      AUTH.GET_USER.REQUEST,
+      AUTH.REGISTER_WITH_EMAIL.SUCCESS,
+      AUTH.LOGIN_WITH_EMAIL.SUCCESS,
+    ],
     getUserSaga
   );
+  yield takeEvery(AUTH.LOGIN_WITH_EMAIL.REQUEST, loginWithEmailSaga);
+  yield takeEvery(AUTH.REGISTER_WITH_EMAIL.REQUEST, registerWithEmailSaga);
+  yield takeEvery(AUTH.CREATE_USER_DB.REQUEST, createUserDbSaga);
   yield takeEvery(AUTH.LOGOUT.REQUEST, logoutSaga);
 }
