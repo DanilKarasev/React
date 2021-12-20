@@ -16,8 +16,8 @@ import { getUser } from "../Store/Auth/actions";
 
 export const Router = () => {
   const { loading } = useSelector(authSelector);
-
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getUser());
   }, [dispatch]);

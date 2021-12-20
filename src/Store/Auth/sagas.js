@@ -9,7 +9,7 @@ import {
   createUserDb,
   createUserDbFailure,
 } from "./actions";
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, delay, put, takeEvery } from "redux-saga/effects";
 import { AUTH } from "./constants";
 import firebase from "firebase";
 
@@ -43,17 +43,18 @@ function* registerWithEmailSaga(payload) {
       payload.email,
       payload.password
     );
-    // yield call(
-    //   firebase.auth().onAuthStateChanged(() => {
-    //     firebase.auth().currentUser.updateProfile({
-    //       displayName: payload.userName,
-    //     });
-    //   })
-    // );
-    //тут просто изменяем displayName, но корректно это не работает
 
-    yield put(registerWithEmailSuccess(result));
+    yield call(
+      firebase.auth().onAuthStateChanged(() => {
+        firebase.auth().currentUser.updateProfile({
+          displayName: payload.userName,
+        });
+      })
+    );
+
     yield put(createUserDb(payload));
+    yield delay(1000); //это конечно костыль, но меня задолбало что я не успеваю получить displayName при первом рендере, теперь точно успею
+    yield put(registerWithEmailSuccess(result));
   } catch (error) {
     yield put(registerWithEmailFailure(error));
   }
@@ -68,6 +69,7 @@ function* createUserDbSaga({ payload }) {
     yield call(profileDatabase, "userName", payload.userName);
     yield call(profileDatabase, "email", payload.email);
     yield call(profileDatabase, "phone", payload.phone);
+    //нужно как то красиво объединить все вызовы в один. Зря я выбрал сагу....
   } catch (error) {
     yield put(createUserDbFailure(error));
   }
@@ -96,6 +98,6 @@ export default function* authRootSaga() {
   );
   yield takeEvery(AUTH.LOGIN_WITH_EMAIL.REQUEST, loginWithEmailSaga);
   yield takeEvery(AUTH.REGISTER_WITH_EMAIL.REQUEST, registerWithEmailSaga);
-  yield takeEvery(AUTH.CREATE_USER_DB.REQUEST, createUserDbSaga);
+  yield takeEvery(AUTH.CREATE_USER_DB, createUserDbSaga);
   yield takeEvery(AUTH.LOGOUT.REQUEST, logoutSaga);
 }

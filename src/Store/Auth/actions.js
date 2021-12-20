@@ -57,15 +57,11 @@ export const getUserResolved = (user) => ({
 });
 
 export const createUserDb = (payload) => ({
-  type: AUTH.CREATE_USER_DB.REQUEST,
+  type: AUTH.CREATE_USER_DB,
   payload,
 });
 
-export const createUserDbSuccess = () => ({
-  type: AUTH.CREATE_USER_DB.SUCCESS,
-});
-
 export const createUserDbFailure = (error) => ({
-  type: AUTH.CREATE_USER_DB.FAILURE,
+  type: AUTH.CREATE_USER_DB_FAILURE,
   error,
 });
