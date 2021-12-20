@@ -2,8 +2,10 @@ import "./MessageList.sass";
 import { useSelector } from "react-redux";
 import { messageListSelector } from "../../Store/Messages/selectors";
 import { useSpring, animated } from "react-spring";
+import { currentUserSelector } from "../../Store/Auth/selectors";
 
-export const MessageList = ({ chatId, messageAuthor }) => {
+export const MessageList = ({ chatId }) => {
+  const { displayName } = useSelector(currentUserSelector);
   const messageList = useSelector(messageListSelector);
   const animationStyle = useSpring({
     to: { opacity: 1 },
@@ -15,9 +17,7 @@ export const MessageList = ({ chatId, messageAuthor }) => {
       {messageList[chatId]?.map(({ message, author, id, time }) => (
         <div
           key={id}
-          className={
-            author === messageAuthor ? "Message Message-me" : "Message"
-          }
+          className={author === displayName ? "Message Message-me" : "Message"}
         >
           <h4>{author}</h4>
           <div className={"Message-box"}>
