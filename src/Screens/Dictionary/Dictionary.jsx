@@ -17,15 +17,15 @@ export const Dictionary = () => {
 
   const dispatch = useDispatch();
 
-  const [inputWord, setInputWord] = useState("");
+  const [wordToCheck, setWordToCheck] = useState("");
   const handleWord = (e) => {
-    setInputWord(e.target.value);
+    setWordToCheck(e.target.value);
   };
 
   const handleWordData = (e) => {
     e.preventDefault();
-    setInputWord("");
-    dispatch(fetchWordData({ inputWord }));
+    setWordToCheck("");
+    dispatch(fetchWordData({ wordToCheck }));
   };
 
   return (
@@ -37,13 +37,13 @@ export const Dictionary = () => {
           <FormGroup>
             <form className={"Profile-form"} onSubmit={handleWordData}>
               <TextField
-                value={inputWord}
+                value={wordToCheck}
                 onChange={handleWord}
                 id="outlined-basic"
                 label="Type any word in russian"
                 variant="outlined"
               />
-              <Button type={"submit"} disabled={!inputWord}>
+              <Button type={"submit"} disabled={!wordToCheck}>
                 Check word
               </Button>
             </form>

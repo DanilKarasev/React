@@ -2,7 +2,7 @@ import {
   GET_WORD_DATA_REQUEST,
   GET_WORD_DATA_SUCCESS,
   GET_WORD_DATA_ERROR,
-  FETCHED_WORD_DATA,
+  FETCH_WORD_DATA,
 } from "./constants";
 
 export const getWordDataRequestAction = () => ({
@@ -20,6 +20,6 @@ export const getWordDataErrorAction = (error) => ({
 });
 
 export const fetchWordData = (payload) => ({
-  type: FETCHED_WORD_DATA,
+  type: FETCH_WORD_DATA,
   payload,
 });

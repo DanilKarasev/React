@@ -6,7 +6,9 @@ import { currentUserSelector } from "../../Store/Auth/selectors";
 
 export const MessageList = ({ chatId }) => {
   const { displayName } = useSelector(currentUserSelector);
-  const messageList = useSelector(messageListSelector);
+  // const messageList = useSelector(messageListSelector);
+  const messageList = Object.values(useSelector(messageListSelector)[chatId]);
+
   const animationStyle = useSpring({
     to: { opacity: 1 },
     from: { opacity: 0 },
@@ -14,7 +16,7 @@ export const MessageList = ({ chatId }) => {
 
   return (
     <animated.div style={animationStyle} className={"Chat-body"}>
-      {messageList[chatId]?.map(({ message, author, id, time }) => (
+      {messageList.map(({ message, author, id, time }) => (
         <div
           key={id}
           className={author === displayName ? "Message Message-me" : "Message"}

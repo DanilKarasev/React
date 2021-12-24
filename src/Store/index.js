@@ -6,17 +6,18 @@ import { profileReducer } from "./Profile/reducer";
 import { chatsReducer } from "./Chats/reducer";
 import { messageListReducer } from "./Messages/reducer";
 import dictionaryReducer from "./Dictionary/reducer";
-import addMessageWithSaga from "./Messages/sagas";
 import authReducer from "./Auth/reducer";
 import fetchWordData from "./Dictionary/sagas";
 import authRootSaga from "./Auth/sagas";
+import chatsRootSaga from "./Chats/sagas";
+import messageRootSaga from "./Messages/sagas";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["auth", "messages"],
+  blacklist: ["auth", "messages", "chats"],
 };
 
 const rootReducer = combineReducers({
@@ -38,6 +39,7 @@ export const store = createStore(
 
 export const persistor = persistStore(store);
 
-sagaMiddleware.run(addMessageWithSaga);
+sagaMiddleware.run(messageRootSaga);
 sagaMiddleware.run(fetchWordData);
 sagaMiddleware.run(authRootSaga);
+sagaMiddleware.run(chatsRootSaga);

@@ -24,11 +24,9 @@ export const Router = () => {
 
   if (loading) {
     return (
-      <BrowserRouter>
-        <div className={"Loading"}>
-          <CircularProgress />
-        </div>
-      </BrowserRouter>
+      <div className={"Loading"}>
+        <CircularProgress />
+      </div>
     );
   } else {
     return (
