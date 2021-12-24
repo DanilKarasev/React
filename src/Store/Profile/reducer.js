@@ -1,7 +1,6 @@
 import { CHANGE_PROFILE_NAME_ACTION } from "./constants";
 
 const initialState = {
-  showProfileInfo: true,
   profileName: "",
 };
 

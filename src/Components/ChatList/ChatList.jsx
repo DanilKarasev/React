@@ -1,25 +1,31 @@
 import { ROUTES } from "../../Router/constants";
 import { useDispatch, useSelector } from "react-redux";
-import { chatListSelector } from "../../Store/Chats/selectors";
+import {
+  chatListLoadingSelector,
+  chatListSelector,
+} from "../../Store/Chats/selectors";
 import { SearchChats } from "../SearchChats";
-import { deleteChatAction } from "../../Store/Chats/actions";
-import { deleteMessageListAction } from "../../Store/Messages/actions";
+import { deleteChatAction, getChatsAction } from "../../Store/Chats/actions";
+import {
+  deleteMessageListAction,
+  getMessagesAction,
+} from "../../Store/Messages/actions";
 import { Link, useLocation } from "react-router-dom";
 import ListSubheader from "@mui/material/ListSubheader";
 import ListItemButton from "@mui/material/ListItemButton";
 import Avatar from "@mui/material/Avatar";
 import ListItemText from "@mui/material/ListItemText";
 import List from "@mui/material/List";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ChatList.sass";
 import { ContextMenu, ContextMenuTrigger } from "react-contextmenu";
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 
 export const ChatList = () => {
   const location = useLocation();
   const dispatch = useDispatch();
+  const loading = useSelector(chatListLoadingSelector);
   const chatList = Object.values(useSelector(chatListSelector));
-
   const [search, setSearch] = useState("");
   const filteredChats = chatList.filter((chat) => {
     return chat.name.toLowerCase().includes(search.toLowerCase());
@@ -32,6 +38,24 @@ export const ChatList = () => {
     dispatch(deleteChatAction({ id }));
     dispatch(deleteMessageListAction({ id }));
   };
+
+  useEffect(() => {
+    dispatch(getChatsAction());
+    dispatch(getMessagesAction());
+  }, [dispatch]);
+
+  if (loading) {
+    return (
+      <>
+        <SearchChats setSearch={setSearch} />
+        <div className={"Chat-content"}>
+          <div className={"Loading-chats"}>
+            <CircularProgress />
+          </div>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
