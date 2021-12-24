@@ -5,20 +5,28 @@ import { useSelector } from "react-redux";
 import { wordDataSelector } from "../../Store/Dictionary/selectors";
 
 export const DictionaryContent = () => {
+  const { wordData, error, loading } = useSelector(wordDataSelector);
+
   const animationStyle = useSpring({
     to: { opacity: 1 },
     from: { opacity: 0 },
   });
 
-  const { wordData, error, loading } = useSelector(wordDataSelector);
+  if (loading)
+    return (
+      <animated.div className={"Dictionary-no-content"} style={animationStyle}>
+        <CircularProgress />
+      </animated.div>
+    );
 
-  if (error) {
+  if (error)
     return (
       <animated.div className={"Dictionary-no-content"} style={animationStyle}>
         В нашем словаре такого слова не нашлось :(
       </animated.div>
     );
-  } else if (wordData) {
+
+  if (wordData) {
     const { word } = wordData;
     const partOfSpeech = wordData?.meanings[0]?.partOfSpeech;
     const { definition, example } = wordData.meanings[0].definitions[0];
@@ -41,17 +49,11 @@ export const DictionaryContent = () => {
         </div>
       </animated.div>
     );
-  } else if (loading) {
-    return (
-      <animated.div className={"Dictionary-no-content"} style={animationStyle}>
-        <CircularProgress />
-      </animated.div>
-    );
-  } else {
-    return (
-      <animated.div className={"Dictionary-no-content"} style={animationStyle}>
-        <div>Введите слово и нажмите Enter</div>
-      </animated.div>
-    );
   }
+
+  return (
+    <animated.div className={"Dictionary-no-content"} style={animationStyle}>
+      <div>Введите слово и нажмите Enter</div>
+    </animated.div>
+  );
 };

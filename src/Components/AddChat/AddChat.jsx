@@ -33,11 +33,13 @@ export const AddChat = ({ open, close }) => {
     e.preventDefault();
     const newChatId = faker.datatype.uuid();
     dispatch(addChatAction({ newChatName, newChatId }));
+    const fakeMessageId = faker.datatype.uuid();
     dispatch(
       addMessageAction({
         chatId: newChatId,
         messageAuthor: "Welcome Bot",
         message: `Welcome to ${newChatName} chat!`,
+        fakeMessageId,
       })
     );
     setNewChatName("");
