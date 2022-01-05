@@ -5,11 +5,6 @@ import {
   UPDATE_MESSAGES_ACTION,
 } from "./constants";
 
-// export const addMessageAction = (payload) => ({
-//   type: ADD_MESSAGE_ACTION,
-//   payload,
-// });
-
 export const addMessageAction = (payload) => ({
   type: ADD_MESSAGE_ACTION,
   payload,
@@ -20,11 +15,11 @@ export const deleteMessageListAction = (payload) => ({
   payload,
 });
 
-export const getMessagesAction = () => ({
-  type: GET_MESSAGES_ACTION,
-});
-
 export const updateMessagesAction = (payload) => ({
   type: UPDATE_MESSAGES_ACTION,
   payload,
+});
+
+export const getMessagesAction = () => ({
+  type: GET_MESSAGES_ACTION,
 });

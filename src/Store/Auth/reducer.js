@@ -4,7 +4,6 @@ const initialState = {
   loading: false,
   registerEventLoading: false,
   loggedIn: false,
-  userId: null,
   error: null,
   user: null,
 };
@@ -51,7 +50,6 @@ const authReducer = (state = initialState, action) => {
         ...state,
         registerEventLoading: false,
         loading: false,
-        userId: action.credential.user.uid,
         error: null,
       };
     case AUTH.REGISTER_WITH_EMAIL.FAILURE:

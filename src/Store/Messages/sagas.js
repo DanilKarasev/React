@@ -1,31 +1,30 @@
-import {
-  call,
-  delay,
-  put,
-  select,
-  takeEvery,
-  takeLatest,
-} from "redux-saga/effects";
-import { addMessageAction, updateMessagesAction } from "./actions";
+import { call, put, takeEvery, fork, take } from "redux-saga/effects";
+import { updateMessagesAction } from "./actions";
 import {
   ADD_MESSAGE_ACTION,
   DELETE_CHAT_MESSAGES_ACTION,
   GET_MESSAGES_ACTION,
 } from "./constants";
-import faker from "faker";
-import { currentUserSelector } from "../Auth/selectors";
 import { db } from "../../Services/firebase";
+import { eventChannel } from "redux-saga";
 
 function* addMessageWithFirebase({ payload }) {
-  const addMessageToDb = (chatId, messageAuthor, message, fakeMessageId) => {
+  const addMessageToDb = (
+    chatId,
+    messageAuthor,
+    message,
+    fakeMessageId,
+    messageAuthorId
+  ) => {
     db.ref("messages")
       .child(chatId)
       .child(fakeMessageId)
       .set({
         message: message,
-        author: messageAuthor,
+        authorName: messageAuthor,
         id: fakeMessageId,
         time: new Date().toTimeString().split(" ")[0],
+        authorId: messageAuthorId,
       });
   };
   yield call(
@@ -33,7 +32,8 @@ function* addMessageWithFirebase({ payload }) {
     payload.chatId,
     payload.messageAuthor,
     payload.message,
-    payload.fakeMessageId
+    payload.fakeMessageId,
+    payload.messageAuthorId
   );
 }
 
@@ -44,59 +44,61 @@ function* deleteMessagesWithFirebase({ payload }) {
   yield call(deleteMessagesFromDb, payload.id);
 }
 
-function* initMessagesTracking() {
-  function getPayloadFromSnapshot(snapshot) {
-    const snapshotMessages = [];
+// function* addBotMessageWithSagaAction(action) {
+//   const { chatId, messageAuthor } = action.payload;
+//   const { displayName } = yield select(currentUserSelector);
+//   const fakeMessageId = Date.now();
+//
+//   if (messageAuthor === displayName) {
+//     yield delay(1500);
+//     yield put(
+//       addMessageAction({
+//         chatId,
+//         messageAuthor: faker.name.findName(),
+//         message: faker.lorem.sentence(),
+//         fakeMessageId,
+//       })
+//     );
+//   }
+// }
 
-    snapshot.forEach((data) => {
-      snapshotMessages.push({ [data.key]: data.val() });
-    });
+function getPayloadFromSnapshot(snapshot) {
+  const snapshotMessages = [];
 
-    const messages = snapshotMessages.reduce((result, item) => {
-      const key = Object.keys(item)[0];
-      result[key] = Object.values(item[key]);
-      return result;
-    }, {});
+  snapshot.forEach((data) => {
+    snapshotMessages.push({ [data.key]: data.val() });
+  });
 
-    return { messages };
-  }
+  const messages = snapshotMessages.reduce((result, item) => {
+    const key = Object.keys(item)[0];
+    result[key] = Object.values(item[key]);
+    return result;
+  }, {});
 
-  function getPayload() {
-    return new Promise((resolve) => {
-      db.ref("messages").on("value", (snapshot) => {
-        resolve(getPayloadFromSnapshot(snapshot));
-      });
-    });
-  }
-  const payload = yield call(getPayload);
-  delay(1500);
-  yield put(updateMessagesAction(payload));
+  return { messages };
 }
 
-function* addBotMessageWithSagaAction(action) {
-  const { chatId, messageAuthor } = action.payload;
-  const { displayName } = yield select(currentUserSelector);
-  const fakeMessageId = Date.now();
-
-  if (messageAuthor === displayName) {
-    yield delay(1500);
-    yield put(
-      addMessageAction({
-        chatId,
-        messageAuthor: faker.name.findName(),
-        message: faker.lorem.sentence(),
-        fakeMessageId,
-      })
+function createEventChannel() {
+  const listener = eventChannel((emit) => {
+    db.ref("messages").on("value", (snapshot) =>
+      emit(getPayloadFromSnapshot(snapshot))
     );
+    return () => db.ref("messages").off(listener);
+  });
+  return listener;
+}
+
+function* initMessagesTrackingSaga() {
+  const updateChannel = createEventChannel();
+  while (true) {
+    const messages = yield take(updateChannel);
+    yield put(updateMessagesAction(messages));
   }
 }
 
 export default function* messageRootSaga() {
   yield takeEvery(ADD_MESSAGE_ACTION, addMessageWithFirebase);
   yield takeEvery(DELETE_CHAT_MESSAGES_ACTION, deleteMessagesWithFirebase);
-  yield takeEvery(
-    [GET_MESSAGES_ACTION, DELETE_CHAT_MESSAGES_ACTION],
-    initMessagesTracking
-  );
-  // yield takeLatest(ADD_MESSAGE_ACTION, addBotMessageWithSagaAction);
+  yield takeEvery(GET_MESSAGES_ACTION, initMessagesTrackingSaga);
+  yield fork(initMessagesTrackingSaga);
 }

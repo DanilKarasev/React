@@ -7,6 +7,7 @@ import { currentUserSelector } from "../../Store/Auth/selectors";
 export const AddMessage = ({ chatId }) => {
   const dispatch = useDispatch();
   const messageAuthor = useSelector(currentUserSelector).displayName;
+  const messageAuthorId = useSelector(currentUserSelector).uid;
 
   const [message, setMessage] = useState("");
   const handleMessage = (e) => {
@@ -17,7 +18,13 @@ export const AddMessage = ({ chatId }) => {
     e.preventDefault();
     const fakeMessageId = Date.now();
     dispatch(
-      addMessageAction({ chatId, messageAuthor, message, fakeMessageId })
+      addMessageAction({
+        chatId,
+        messageAuthor,
+        messageAuthorId,
+        message,
+        fakeMessageId,
+      })
     );
     setMessage("");
   };
