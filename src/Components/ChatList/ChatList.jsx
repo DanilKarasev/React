@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import { ROUTES } from "../../Router/constants";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -16,7 +17,6 @@ import ListItemButton from "@mui/material/ListItemButton";
 import Avatar from "@mui/material/Avatar";
 import ListItemText from "@mui/material/ListItemText";
 import List from "@mui/material/List";
-import React, { useEffect, useState } from "react";
 import "./ChatList.sass";
 import { ContextMenu, ContextMenuTrigger } from "react-contextmenu";
 import { Button, CircularProgress } from "@mui/material";

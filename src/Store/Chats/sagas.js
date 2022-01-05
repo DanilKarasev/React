@@ -1,13 +1,14 @@
 import { db } from "../../Services/firebase";
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, fork, put, take, takeEvery } from "redux-saga/effects";
 import { updateChatAction } from "./actions";
 import {
   ADD_CHAT_ACTION,
   DELETE_CHAT_ACTION,
   GET_CHATS_ACTION,
 } from "./constants";
+import { eventChannel } from "redux-saga";
 
-function* addChatSaga({ payload }) {
+function* addChatWithFirebase({ payload }) {
   const addChatToDb = (id, name) => {
     db.ref("chats").child(id).set({
       id: id,
@@ -18,46 +19,50 @@ function* addChatSaga({ payload }) {
   yield call(addChatToDb, payload.newChatId, payload.newChatName);
 }
 
-function* deleteChatSaga({ payload }) {
+function* deleteChatWithFirebase({ payload }) {
   const deleteChatFromDb = (id) => {
     db.ref("chats").child(id).remove();
   };
   yield call(deleteChatFromDb, payload.id);
 }
 
-function* initChatsTracking() {
-  function getPayloadFromSnapshot(snapshot) {
-    const snapshotChats = [];
+function getPayloadFromSnapshot(snapshot) {
+  const snapshotChats = [];
 
-    snapshot.forEach((data) => {
-      snapshotChats.push({ [data.key]: data.val() });
-    });
+  snapshot.forEach((data) => {
+    snapshotChats.push({ [data.key]: data.val() });
+  });
 
-    const chats = snapshotChats.reduce(function (result, item) {
-      const key = Object.keys(item)[0];
-      result[key] = item[key];
-      return result;
-    }, {});
+  const chats = snapshotChats.reduce(function (result, item) {
+    const key = Object.keys(item)[0];
+    result[key] = item[key];
+    return result;
+  }, {});
 
-    return { chats };
+  return { chats };
+}
+
+function createEventChannel() {
+  const listener = eventChannel((emit) => {
+    db.ref("chats").on("value", (snapshot) =>
+      emit(getPayloadFromSnapshot(snapshot))
+    );
+    return () => db.ref("chats").off(listener);
+  });
+  return listener;
+}
+
+function* initChatsTrackingSaga() {
+  const updateChannel = createEventChannel();
+  while (true) {
+    const chats = yield take(updateChannel);
+    yield put(updateChatAction(chats));
   }
-
-  function getPayload() {
-    return new Promise((resolve) => {
-      db.ref("chats").on("value", (snapshot) => {
-        resolve(getPayloadFromSnapshot(snapshot));
-      });
-    });
-  }
-  const payload = yield call(getPayload);
-  yield put(updateChatAction(payload));
 }
 
 export default function* chatsRootSaga() {
-  yield takeEvery(DELETE_CHAT_ACTION, deleteChatSaga);
-  yield takeEvery(ADD_CHAT_ACTION, addChatSaga);
-  yield takeEvery(
-    [ADD_CHAT_ACTION, DELETE_CHAT_ACTION, GET_CHATS_ACTION],
-    initChatsTracking
-  );
+  yield takeEvery(DELETE_CHAT_ACTION, deleteChatWithFirebase);
+  yield takeEvery(ADD_CHAT_ACTION, addChatWithFirebase);
+  yield takeEvery(GET_CHATS_ACTION, initChatsTrackingSaga);
+  yield fork(initChatsTrackingSaga);
 }

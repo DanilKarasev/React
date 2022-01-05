@@ -1,8 +1,4 @@
-import {
-  ADD_CHAT_ACTION,
-  DELETE_CHAT_ACTION,
-  UPDATE_CHAT_ACTION,
-} from "./constants";
+import { UPDATE_CHAT_ACTION } from "./constants";
 
 const initialState = {
   loading: true,
@@ -22,12 +18,6 @@ const initialState = {
 
 export const chatsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_CHAT_ACTION: {
-      return { ...state };
-    }
-    case DELETE_CHAT_ACTION: {
-      return { ...state };
-    }
     case UPDATE_CHAT_ACTION: {
       return { loading: false, chatList: action.payload.chats };
     }

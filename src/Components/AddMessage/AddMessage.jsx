@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { addMessageAction } from "../../Store/Messages/actions";
 import "./AddMessage.sass";
 import { currentUserSelector } from "../../Store/Auth/selectors";
-import faker from "faker";
 
 export const AddMessage = ({ chatId }) => {
   const dispatch = useDispatch();
   const messageAuthor = useSelector(currentUserSelector).displayName;
+  const messageAuthorId = useSelector(currentUserSelector).uid;
 
   const [message, setMessage] = useState("");
   const handleMessage = (e) => {
@@ -16,9 +16,15 @@ export const AddMessage = ({ chatId }) => {
 
   const addMessage = (e) => {
     e.preventDefault();
-    const fakeMessageId = faker.datatype.uuid();
+    const fakeMessageId = Date.now();
     dispatch(
-      addMessageAction({ chatId, messageAuthor, message, fakeMessageId })
+      addMessageAction({
+        chatId,
+        messageAuthor,
+        messageAuthorId,
+        message,
+        fakeMessageId,
+      })
     );
     setMessage("");
   };

@@ -1,4 +1,3 @@
-import React from "react";
 import { Redirect, useParams } from "react-router-dom";
 import { ROUTES } from "../../Router/constants";
 import { useSelector } from "react-redux";

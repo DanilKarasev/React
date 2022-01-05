@@ -3,31 +3,48 @@ import { useSelector } from "react-redux";
 import { messageListSelector } from "../../Store/Messages/selectors";
 import { useSpring, animated } from "react-spring";
 import { currentUserSelector } from "../../Store/Auth/selectors";
+import { useEffect, useRef } from "react";
 
 export const MessageList = ({ chatId }) => {
-  const { displayName } = useSelector(currentUserSelector);
-  // const messageList = useSelector(messageListSelector);
-  const messageList = Object.values(useSelector(messageListSelector)[chatId]);
+  const { uid } = useSelector(currentUserSelector);
+  const messageList = useSelector(messageListSelector);
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    if (messageList[chatId]) {
+      scrollRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messageList, chatId]);
 
   const animationStyle = useSpring({
     to: { opacity: 1 },
     from: { opacity: 0 },
   });
 
-  return (
-    <animated.div style={animationStyle} className={"Chat-body"}>
-      {messageList.map(({ message, author, id, time }) => (
-        <div
-          key={id}
-          className={author === displayName ? "Message Message-me" : "Message"}
-        >
-          <h4>{author}</h4>
-          <div className={"Message-box"}>
-            <div className={"Message-text"}>{message}</div>
-            <div className={"Message-time"}>{time}</div>
-          </div>
-        </div>
-      ))}
-    </animated.div>
-  );
+  if (!messageList[chatId]) {
+    return (
+      <div className={"Home-info"}>
+        <p>No messages here yet...</p>
+      </div>
+    );
+  } else
+    return (
+      <animated.div style={animationStyle} className={"Chat-body"}>
+        {Object.values(messageList[chatId]).map(
+          ({ authorId, authorName, id, message, time }) => (
+            <div
+              key={id}
+              className={authorId === uid ? "Message Message-me" : "Message"}
+              ref={scrollRef}
+            >
+              <h4>{authorName}</h4>
+              <div className={"Message-box"}>
+                <div className={"Message-text"}>{message}</div>
+                <div className={"Message-time"}>{time.slice(0, -3)}</div>
+              </div>
+            </div>
+          )
+        )}
+      </animated.div>
+    );
 };

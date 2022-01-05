@@ -53,7 +53,7 @@ function* registerWithEmailSaga(payload) {
     );
 
     yield put(createUserDb(payload));
-    yield delay(1000); //это конечно костыль, но меня задолбало что я не успеваю получить displayName при первом рендере, теперь точно успею
+    yield delay(1500);
     yield put(registerWithEmailSuccess(result));
   } catch (error) {
     yield put(registerWithEmailFailure(error));
@@ -69,7 +69,6 @@ function* createUserDbSaga({ payload }) {
     yield call(profileDatabase, "userName", payload.userName);
     yield call(profileDatabase, "email", payload.email);
     yield call(profileDatabase, "phone", payload.phone);
-    //нужно как то красиво объединить все вызовы в один. Зря я выбрал сагу....
   } catch (error) {
     yield put(createUserDbFailure(error));
   }
