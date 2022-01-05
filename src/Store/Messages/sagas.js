@@ -25,7 +25,7 @@ function* addMessageWithFirebase({ payload }) {
         message: message,
         author: messageAuthor,
         id: fakeMessageId,
-        time: new Date().toTimeString().split(" ")[0].slice(0, -3),
+        time: new Date().toTimeString().split(" ")[0],
       });
   };
   yield call(
@@ -52,7 +52,7 @@ function* initMessagesTracking() {
       snapshotMessages.push({ [data.key]: data.val() });
     });
 
-    const messages = snapshotMessages.reduce(function (result, item) {
+    const messages = snapshotMessages.reduce((result, item) => {
       const key = Object.keys(item)[0];
       result[key] = Object.values(item[key]);
       return result;
@@ -76,7 +76,7 @@ function* initMessagesTracking() {
 function* addBotMessageWithSagaAction(action) {
   const { chatId, messageAuthor } = action.payload;
   const { displayName } = yield select(currentUserSelector);
-  const fakeMessageId = faker.datatype.uuid();
+  const fakeMessageId = Date.now();
 
   if (messageAuthor === displayName) {
     yield delay(1500);
@@ -94,6 +94,9 @@ function* addBotMessageWithSagaAction(action) {
 export default function* messageRootSaga() {
   yield takeEvery(ADD_MESSAGE_ACTION, addMessageWithFirebase);
   yield takeEvery(DELETE_CHAT_MESSAGES_ACTION, deleteMessagesWithFirebase);
-  yield takeEvery(GET_MESSAGES_ACTION, initMessagesTracking);
-  yield takeLatest(ADD_MESSAGE_ACTION, addBotMessageWithSagaAction);
+  yield takeEvery(
+    [GET_MESSAGES_ACTION, DELETE_CHAT_MESSAGES_ACTION],
+    initMessagesTracking
+  );
+  // yield takeLatest(ADD_MESSAGE_ACTION, addBotMessageWithSagaAction);
 }

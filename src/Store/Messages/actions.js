@@ -5,6 +5,11 @@ import {
   UPDATE_MESSAGES_ACTION,
 } from "./constants";
 
+// export const addMessageAction = (payload) => ({
+//   type: ADD_MESSAGE_ACTION,
+//   payload,
+// });
+
 export const addMessageAction = (payload) => ({
   type: ADD_MESSAGE_ACTION,
   payload,
