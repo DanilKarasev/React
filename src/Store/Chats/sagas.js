@@ -1,11 +1,7 @@
 import { db } from "../../Services/firebase";
 import { call, fork, put, take, takeEvery } from "redux-saga/effects";
 import { updateChatAction } from "./actions";
-import {
-  ADD_CHAT_ACTION,
-  DELETE_CHAT_ACTION,
-  GET_CHATS_ACTION,
-} from "./constants";
+import { ADD_CHAT_ACTION, DELETE_CHAT_ACTION } from "./constants";
 import { eventChannel } from "redux-saga";
 
 function* addChatWithFirebase({ payload }) {
@@ -63,6 +59,5 @@ function* initChatsTrackingSaga() {
 export default function* chatsRootSaga() {
   yield takeEvery(DELETE_CHAT_ACTION, deleteChatWithFirebase);
   yield takeEvery(ADD_CHAT_ACTION, addChatWithFirebase);
-  yield takeEvery(GET_CHATS_ACTION, initChatsTrackingSaga);
   yield fork(initChatsTrackingSaga);
 }

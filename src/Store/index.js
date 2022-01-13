@@ -12,7 +12,13 @@ import authRootSaga from "./Auth/sagas";
 import chatsRootSaga from "./Chats/sagas";
 import messageRootSaga from "./Messages/sagas";
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers =
+  (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+      trace: true,
+      traceLimit: 25,
+    })) ||
+  compose;
 
 const persistConfig = {
   key: "root",

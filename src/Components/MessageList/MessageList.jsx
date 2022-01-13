@@ -1,9 +1,9 @@
-import "./MessageList.sass";
 import { useSelector } from "react-redux";
 import { messageListSelector } from "../../Store/Messages/selectors";
 import { useSpring, animated } from "react-spring";
 import { currentUserSelector } from "../../Store/Auth/selectors";
 import { useEffect, useRef } from "react";
+import "./MessageList.sass";
 
 export const MessageList = ({ chatId }) => {
   const { uid } = useSelector(currentUserSelector);

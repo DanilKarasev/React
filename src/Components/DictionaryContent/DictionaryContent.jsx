@@ -1,8 +1,8 @@
-import "./DictionaryContent.sass";
 import { useSpring, animated } from "react-spring";
 import { CircularProgress } from "@mui/material";
 import { useSelector } from "react-redux";
 import { wordDataSelector } from "../../Store/Dictionary/selectors";
+import "./DictionaryContent.sass";
 
 export const DictionaryContent = () => {
   const { wordData, error, loading } = useSelector(wordDataSelector);

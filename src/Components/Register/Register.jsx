@@ -18,21 +18,21 @@ export const Register = ({ open, close }) => {
   const [password, setPassword] = useState("");
 
   const handleChangeUserName = (event) => {
-    setUserName(event.target.value);
+    setUserName(event.target.value.replace(/\s+/g, " "));
   };
   const handleChangePhone = (event) => {
     setPhone(event.target.value);
   };
   const handleChangeEmail = (event) => {
-    setEmail(event.target.value);
+    setEmail(event.target.value.trim());
   };
   const handleChangePassword = (event) => {
-    setPassword(event.target.value);
+    setPassword(event.target.value.replace(/\s/g, ""));
   };
 
   const handleRegisterNewUser = (e) => {
     e.preventDefault();
-    dispatch(registerWithEmail(userName, phone, email, password));
+    dispatch(registerWithEmail(userName.trim(), phone, email, password));
   };
 
   return (
@@ -62,7 +62,6 @@ export const Register = ({ open, close }) => {
                 id="outlined-required"
                 label="User name"
               />
-
               <InputMask
                 value={phone}
                 onChange={handleChangePhone}

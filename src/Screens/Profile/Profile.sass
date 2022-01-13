@@ -4,24 +4,13 @@
   background: rgb(144,149,0)
   background: radial-gradient(circle, #909504 -114%, #62AA01 -97%, #B5AC5F 86%)
   background-position: bottom 300px right 320px
-  width: 600px
-  height: 100vh
   flex-grow: 1
   border-left: 1px solid #dfe1e5
-
-.Profile-main
-  background-color: #3390ec
-  padding: 1%
-  height:
-  box-sizing: border-box
-  display: flex
-  flex-grow: 1
-  .css-ahj2mt-MuiTypography-root
-    color: white
 
 .Profile-header
   background-color: white
   display: flex
+  justify-content: space-between
   gap: 10px
   align-items: center
   font-size: 24px
@@ -30,42 +19,35 @@
   padding: 4px 4px 4px 8px
   border-bottom: 1px solid #dfe1e5
 
+.Profile-main
+  padding: 1%
+  height:
+  box-sizing: border-box
+  display: flex
+  flex-grow: 1
+  .css-ahj2mt-MuiTypography-root
+    color: white
+
 .Profile-info
   flex-grow: 1
   display: flex
   justify-content: center
   &-content
     display: flex
+    flex-direction: column
     align-items: center
-    justify-content: center
     background: white
     width: 87%
     border-radius: 25px
-    transition: opacity 0.5s ease
-    visibility: visible
-    opacity: 1
-    &__hidden
-      width: 87%
-      transition: opacity 0.5s ease
-      opacity: 0
-      visibility: hidden
 
-.Profile-form
-  background-color: white
+.Profile-avatar
+  margin-top: 5%
+  height: 200px
+  width: 200px
+
+.Profile-inputs
+  margin-top: 10%
   display: flex
   flex-direction: column
-  padding: 10px
-  border-radius: 20px
-  margin-top: 15%
-  gap: 20px
-  .css-1d1r5q-MuiFormHelperText-root
-    text-align: center
-
-.Welcome-message
-  transition: opacity 0.3s ease
-  opacity: 0
-  visibility: hidden
-  &_mounted
-    transition: opacity 0.3s ease
-    opacity: 1
-    visibility: visible
+  gap: 19px
+  width: 67%

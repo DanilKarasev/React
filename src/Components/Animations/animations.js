@@ -15,9 +15,3 @@ export const signInAnimationStyle = {
   to: { opacity: 1 },
   from: { opacity: 0 },
 };
-
-export const standardAnimation = {
-  config: { duration: 400 },
-  to: { opacity: 1 },
-  from: { opacity: 0.5 },
-};

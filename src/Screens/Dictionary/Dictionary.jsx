@@ -33,9 +33,9 @@ export const Dictionary = () => {
       <ChatWrapper />
       <animated.div style={animationStyle} className={"Profile"}>
         <div className={"Profile-header"}>Dictionary</div>
-        <div className={"Profile-main"}>
+        <div className={"Dictionary-main"}>
           <FormGroup>
-            <form className={"Profile-form"} onSubmit={handleWordData}>
+            <form className={"Dictionary-form"} onSubmit={handleWordData}>
               <TextField
                 value={wordToCheck}
                 onChange={handleWord}
@@ -49,8 +49,8 @@ export const Dictionary = () => {
             </form>
           </FormGroup>
 
-          <div className={"Profile-info"}>
-            <div className={"Profile-info-content"}>
+          <div className={"Dictionary-info"}>
+            <div className={"Dictionary-info-content"}>
               <DictionaryContent />
             </div>
           </div>

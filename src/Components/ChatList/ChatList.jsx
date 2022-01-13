@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ROUTES } from "../../Router/constants";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -6,11 +6,8 @@ import {
   chatListSelector,
 } from "../../Store/Chats/selectors";
 import { SearchChats } from "../SearchChats";
-import { deleteChatAction, getChatsAction } from "../../Store/Chats/actions";
-import {
-  deleteMessageListAction,
-  getMessagesAction,
-} from "../../Store/Messages/actions";
+import { deleteChatAction } from "../../Store/Chats/actions";
+import { deleteMessageListAction } from "../../Store/Messages/actions";
 import { Link, useLocation } from "react-router-dom";
 import ListSubheader from "@mui/material/ListSubheader";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -39,10 +36,10 @@ export const ChatList = () => {
     dispatch(deleteMessageListAction({ id }));
   };
 
-  useEffect(() => {
-    dispatch(getChatsAction());
-    dispatch(getMessagesAction());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getChatsAction());
+  //   dispatch(getMessagesAction());
+  // }, [dispatch]);
 
   if (loading) {
     return (
