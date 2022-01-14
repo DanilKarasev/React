@@ -5,7 +5,6 @@ import { BrowserRouter, Redirect, Switch } from "react-router-dom";
 import { Chats } from "../Screens/Chats";
 import { Dictionary } from "../Screens/Dictionary";
 import { SignIn } from "../Screens/SignIn";
-import "./Router.sass";
 import { CircularProgress } from "@mui/material";
 import { PrivateRoute } from "../Components/PrivateRoute";
 import { PublicRoute } from "../Components/PublicRoute";
@@ -13,16 +12,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { authSelector } from "../Store/Auth/selectors";
 import { useEffect } from "react";
 import { getUser } from "../Store/Auth/actions";
+import { profileSelector } from "../Store/Profile/selectors";
+import "./Router.sass";
 
 export const Router = () => {
   const { loading } = useSelector(authSelector);
+  const { profileInfoLoading } = useSelector(profileSelector);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getUser());
   }, [dispatch]);
 
-  if (loading) {
+  if (loading || profileInfoLoading) {
     return (
       <div className={"Loading"}>
         <CircularProgress />

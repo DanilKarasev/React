@@ -36,11 +36,6 @@ export const ChatList = () => {
     dispatch(deleteMessageListAction({ id }));
   };
 
-  // useEffect(() => {
-  //   dispatch(getChatsAction());
-  //   dispatch(getMessagesAction());
-  // }, [dispatch]);
-
   if (loading) {
     return (
       <>

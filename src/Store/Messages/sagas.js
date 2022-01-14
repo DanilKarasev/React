@@ -1,8 +1,16 @@
-import { call, put, takeEvery, fork, take } from "redux-saga/effects";
+import {
+  call,
+  put,
+  takeEvery,
+  fork,
+  take,
+  takeLatest,
+} from "redux-saga/effects";
 import { updateMessagesAction } from "./actions";
 import { ADD_MESSAGE_ACTION, DELETE_CHAT_MESSAGES_ACTION } from "./constants";
 import { db } from "../../Services/firebase";
 import { eventChannel } from "redux-saga";
+import { AUTH } from "../Auth/constants";
 
 function* addMessageWithFirebase({ payload }) {
   const addMessageToDb = (
@@ -95,5 +103,6 @@ function* initMessagesTrackingSaga() {
 export default function* messageRootSaga() {
   yield takeEvery(ADD_MESSAGE_ACTION, addMessageWithFirebase);
   yield takeEvery(DELETE_CHAT_MESSAGES_ACTION, deleteMessagesWithFirebase);
+  yield takeLatest(AUTH.GET_USER.RESOLVED, initMessagesTrackingSaga);
   yield fork(initMessagesTrackingSaga);
 }

@@ -1,8 +1,16 @@
 import { db } from "../../Services/firebase";
-import { call, fork, put, take, takeEvery } from "redux-saga/effects";
+import {
+  call,
+  fork,
+  put,
+  take,
+  takeEvery,
+  takeLatest,
+} from "redux-saga/effects";
 import { updateChatAction } from "./actions";
 import { ADD_CHAT_ACTION, DELETE_CHAT_ACTION } from "./constants";
 import { eventChannel } from "redux-saga";
+import { AUTH } from "../Auth/constants";
 
 function* addChatWithFirebase({ payload }) {
   const addChatToDb = (id, name) => {
@@ -59,5 +67,6 @@ function* initChatsTrackingSaga() {
 export default function* chatsRootSaga() {
   yield takeEvery(DELETE_CHAT_ACTION, deleteChatWithFirebase);
   yield takeEvery(ADD_CHAT_ACTION, addChatWithFirebase);
+  yield takeLatest(AUTH.GET_USER.RESOLVED, initChatsTrackingSaga);
   yield fork(initChatsTrackingSaga);
 }

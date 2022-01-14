@@ -61,6 +61,7 @@ export const Register = ({ open, close }) => {
                 type={"text"}
                 id="outlined-required"
                 label="User name"
+                inputProps={{ maxLength: 20 }}
               />
               <InputMask
                 value={phone}
@@ -83,6 +84,7 @@ export const Register = ({ open, close }) => {
                 type={"email"}
                 id="outlined-required"
                 label="Email"
+                inputProps={{ maxLength: 40 }}
               />
               <TextField
                 value={password}
@@ -91,6 +93,7 @@ export const Register = ({ open, close }) => {
                 type={"password"}
                 id="outlined-required"
                 label="Password"
+                inputProps={{ maxLength: 30 }}
               />
             </div>
             <RegisterResult />

@@ -1,4 +1,5 @@
 import { combineReducers, createStore, applyMiddleware, compose } from "redux";
+import { connectRouter } from "connected-react-router";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import createSagaMiddleware from "redux-saga";
@@ -11,6 +12,7 @@ import fetchWordData from "./Dictionary/sagas";
 import authRootSaga from "./Auth/sagas";
 import chatsRootSaga from "./Chats/sagas";
 import messageRootSaga from "./Messages/sagas";
+import profileRootSaga from "./Profile/sagas";
 
 const composeEnhancers =
   (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&
@@ -23,15 +25,15 @@ const composeEnhancers =
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["auth", "messages", "chats"],
+  blacklist: ["auth", "messages", "chats", "profile"],
 };
 
 const rootReducer = combineReducers({
+  auth: authReducer,
   profile: profileReducer,
   chats: chatsReducer,
   messages: messageListReducer,
   dictionary: dictionaryReducer,
-  auth: authReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -49,3 +51,4 @@ sagaMiddleware.run(messageRootSaga);
 sagaMiddleware.run(fetchWordData);
 sagaMiddleware.run(authRootSaga);
 sagaMiddleware.run(chatsRootSaga);
+sagaMiddleware.run(profileRootSaga);

@@ -62,13 +62,14 @@ function* registerWithEmailSaga(payload) {
 
 function* createUserDbSaga({ payload }) {
   try {
-    const id = firebase.auth().currentUser.uid;
     const profileDatabase = (path, payload) => {
+      const id = firebase.auth().currentUser.uid;
       firebase.database().ref("profile").child(id).child(path).set(payload);
     };
     yield call(profileDatabase, "userName", payload.userName);
     yield call(profileDatabase, "email", payload.email);
     yield call(profileDatabase, "phone", payload.phone);
+    yield call(profileDatabase, "bio", "");
   } catch (error) {
     yield put(createUserDbFailure(error));
   }

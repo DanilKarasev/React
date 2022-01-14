@@ -3,6 +3,7 @@ import { messageListSelector } from "../../Store/Messages/selectors";
 import { useSpring, animated } from "react-spring";
 import { currentUserSelector } from "../../Store/Auth/selectors";
 import { useEffect, useRef } from "react";
+import stringToColor from "../../Utilities/StringToColor";
 import "./MessageList.sass";
 
 export const MessageList = ({ chatId }) => {
@@ -37,7 +38,7 @@ export const MessageList = ({ chatId }) => {
               className={authorId === uid ? "Message Message-me" : "Message"}
               ref={scrollRef}
             >
-              <h4>{authorName}</h4>
+              <h4 style={{ color: stringToColor(authorName) }}>{authorName}</h4>
               <div className={"Message-box"}>
                 <div className={"Message-text"}>{message}</div>
                 <div className={"Message-time"}>{time.slice(0, -3)}</div>

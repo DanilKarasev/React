@@ -1,15 +1,16 @@
-import { CHANGE_PROFILE_NAME_ACTION } from "./constants";
+import { UPDATE_PROFILE_INFO_ACTION } from "./constants";
 
 const initialState = {
-  profileName: "",
+  profileInfoLoading: true,
+  profileInfo: {},
 };
 
 export const profileReducer = (state = initialState, action) => {
   switch (action.type) {
-    case CHANGE_PROFILE_NAME_ACTION: {
+    case UPDATE_PROFILE_INFO_ACTION: {
       return {
-        ...state,
-        profileName: action.payload.profileName,
+        profileInfoLoading: false,
+        profileInfo: action.payload,
       };
     }
     default:
