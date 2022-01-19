@@ -12,16 +12,15 @@
   display: flex
   justify-content: space-between
   gap: 10px
-  align-items: center
+  align-items: baseline
   font-size: 24px
   font-weight: 600
-  height: 46px
+  min-height: 46px
   padding: 4px 4px 4px 8px
   border-bottom: 1px solid #dfe1e5
 
 .Profile-main
   padding: 1%
-  height:
   box-sizing: border-box
   display: flex
   flex-grow: 1
@@ -29,15 +28,14 @@
     color: white
 
 .Profile-info
-  flex-grow: 1
-  display: flex
+  width: 100%
   justify-content: center
   &-content
     display: flex
+    height: 100%
     flex-direction: column
     align-items: center
     background: white
-    width: 87%
     border-radius: 25px
 
 .Profile-avatar
@@ -51,3 +49,31 @@
   flex-direction: column
   gap: 19px
   width: 67%
+
+.Profile-header-left
+  display: flex
+  align-items: baseline
+  p
+    text-align: center
+    font-size: 1.5rem
+    line-height: 1
+    margin: 0
+    padding: 0.5rem
+
+.Btn-sidebar-close
+  display: none
+  color: #707579
+  text-align: center
+  font-size: 1.5rem
+  line-height: 1
+  border-radius: 50%
+  background-color: transparent
+  padding: 0.5rem
+  transition: all .2s ease-in-out
+  cursor: pointer
+  &:hover
+    background-color: rgba(112, 117, 121, 0.08)
+
+@media screen and ( max-width: 650px  )
+  .Btn-sidebar-close
+    display: block

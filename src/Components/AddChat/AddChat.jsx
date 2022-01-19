@@ -71,7 +71,7 @@ export const AddChat = ({ open, close }) => {
               value={newChatName}
               sx={{ ml: 0 }}
               placeholder="Type new chat name"
-              inputProps={{ "aria-label": "Add chats" }}
+              inputProps={{ "aria-label": "Add chats", maxLength: 20 }}
             />
             <div className={"Add-chat-buttons"}>
               <Button variant="outlined" color="error" onClick={close}>

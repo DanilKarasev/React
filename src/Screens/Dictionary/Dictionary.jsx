@@ -7,8 +7,11 @@ import { DictionaryContent } from "../../Components/DictionaryContent";
 import { useDispatch } from "react-redux";
 import { fetchWordData } from "../../Store/Dictionary/actions";
 import { ChatWrapper } from "../../Components/ChatWrapper";
+import { useHistory } from "react-router-dom";
 
 export const Dictionary = () => {
+  const history = useHistory();
+
   const animationStyle = useSpring({
     config: { duration: 400 },
     to: { opacity: 1 },
@@ -28,11 +31,23 @@ export const Dictionary = () => {
     dispatch(fetchWordData({ wordToCheck }));
   };
 
+  const handleClickCloseSidebar = () => {
+    history.push("/");
+  };
+
   return (
     <div className={"Container"}>
       <ChatWrapper />
       <animated.div style={animationStyle} className={"Profile"}>
-        <div className={"Profile-header"}>Dictionary</div>
+        <div className={"Profile-header Dictionary-header"}>
+          <button
+            onClick={handleClickCloseSidebar}
+            className={"Btn-sidebar-close"}
+          >
+            &#129120;
+          </button>
+          <p>Dictionary</p>
+        </div>
         <div className={"Dictionary-main"}>
           <FormGroup>
             <form className={"Dictionary-form"} onSubmit={handleWordData}>

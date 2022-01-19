@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addMessageAction } from "../../Store/Messages/actions";
-import "./AddMessage.sass";
 import { currentUserSelector } from "../../Store/Auth/selectors";
+import { profileInfoSelector } from "../../Store/Profile/selectors";
+import "./AddMessage.sass";
 
 export const AddMessage = ({ chatId }) => {
   const dispatch = useDispatch();
-  const messageAuthor = useSelector(currentUserSelector).displayName;
+  const messageAuthor = useSelector(profileInfoSelector).userName;
   const messageAuthorId = useSelector(currentUserSelector).uid;
 
   const [message, setMessage] = useState("");

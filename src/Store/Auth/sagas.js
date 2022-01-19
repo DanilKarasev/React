@@ -43,15 +43,13 @@ function* registerWithEmailSaga(payload) {
       payload.email,
       payload.password
     );
-
-    yield call(
-      firebase.auth().onAuthStateChanged(() => {
-        firebase.auth().currentUser.updateProfile({
-          displayName: payload.userName,
-        });
-      })
-    );
-
+    // yield call(
+    //   firebase.auth().onAuthStateChanged(() => {
+    //     firebase.auth().currentUser.updateProfile({
+    //       displayName: payload.userName,
+    //     });
+    //   })
+    // );
     yield put(createUserDb(payload));
     yield delay(1500);
     yield put(registerWithEmailSuccess(result));

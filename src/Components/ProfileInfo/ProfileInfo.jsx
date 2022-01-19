@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, TextField } from "@mui/material";
 import { useSpring, animated } from "react-spring";
-import { changeProfileInfoAction } from "../../Store/Profile/actions";
+import { changeProfileInfoRequest } from "../../Store/Profile/actions";
 import { profileInfoSelector } from "../../Store/Profile/selectors";
 import InputMask from "react-input-mask";
 import Avatar from "@mui/material/Avatar";
@@ -43,7 +43,7 @@ export const ProfileInfo = () => {
   });
 
   const handleUpdateProfileInfo = () => {
-    dispatch(changeProfileInfoAction(newUserName, newPhone, newBio));
+    dispatch(changeProfileInfoRequest(newUserName, newPhone, newBio));
   };
 
   function stringAvatar(name) {

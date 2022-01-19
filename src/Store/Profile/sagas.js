@@ -1,10 +1,12 @@
 import { db } from "../../Services/firebase";
-import { call, put, take, takeEvery } from "redux-saga/effects";
-import { eventChannel } from "redux-saga";
-import { updateProfileInfoAction } from "./actions";
+import { call, put, takeEvery } from "redux-saga/effects";
+import { changeProfileInfoSuccess, updateProfileInfoAction } from "./actions";
 import firebase from "firebase";
 import { AUTH } from "../Auth/constants";
-import { CHANGE_PROFILE_INFO_ACTION } from "./constants";
+import {
+  CHANGE_PROFILE_INFO_REQUEST,
+  CHANGE_PROFILE_INFO_SUCCESS,
+} from "./constants";
 
 function getPayloadFromSnapshot(snapshot) {
   const snapshotData = [];
@@ -20,23 +22,19 @@ function getPayloadFromSnapshot(snapshot) {
   return { ...profileInfo };
 }
 
-function createEventChannel() {
-  const listener = eventChannel((emit) => {
-    const userId = firebase.auth().currentUser.uid;
-    db.ref("profile")
-      .child(userId)
-      .on("value", (snapshot) => emit(getPayloadFromSnapshot(snapshot)));
-    return () => db.ref("profile").child(userId).off(listener);
-  });
-  return listener;
-}
-
-function* initProfileTrackingSaga() {
-  const updateChannel = createEventChannel();
-  while (true) {
-    const profileInfo = yield take(updateChannel);
-    yield put(updateProfileInfoAction(profileInfo));
+function* getProfileInfoSaga() {
+  function getPayload() {
+    return new Promise((resolve) => {
+      const userId = firebase.auth().currentUser.uid;
+      db.ref("profile")
+        .child(userId)
+        .on("value", (snapshot) => {
+          resolve(getPayloadFromSnapshot(snapshot));
+        });
+    });
   }
+  const profileInfo = yield call(getPayload);
+  yield put(updateProfileInfoAction(profileInfo));
 }
 
 function* updateUserDbSaga(payload) {
@@ -44,16 +42,14 @@ function* updateUserDbSaga(payload) {
     const id = firebase.auth().currentUser.uid;
     firebase.database().ref("profile").child(id).child(path).set(payload);
   };
-  console.log(payload.newUserName, payload.newPhone, payload.newBio);
   yield call(profileDatabase, "userName", payload.newUserName);
   yield call(profileDatabase, "phone", payload.newPhone);
   yield call(profileDatabase, "bio", payload.newBio);
+  yield put(changeProfileInfoSuccess());
 }
 
 export default function* profileRootSaga() {
-  yield takeEvery(AUTH.GET_USER.RESOLVED, initProfileTrackingSaga);
-  yield takeEvery(CHANGE_PROFILE_INFO_ACTION, updateUserDbSaga);
-  yield takeEvery(CHANGE_PROFILE_INFO_ACTION, initProfileTrackingSaga);
-
-  // yield fork(initProfileTrackingSaga);
+  yield takeEvery(AUTH.GET_USER.RESOLVED, getProfileInfoSaga);
+  yield takeEvery(CHANGE_PROFILE_INFO_REQUEST, updateUserDbSaga);
+  yield takeEvery(CHANGE_PROFILE_INFO_SUCCESS, getProfileInfoSaga);
 }

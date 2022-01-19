@@ -1,27 +1,54 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import { ChatWrapper } from "../../Components/ChatWrapper";
 import { logout } from "../../Store/Auth/actions";
-import { currentUserSelector } from "../../Store/Auth/selectors";
-import Avatar from "@mui/material/Avatar";
 import { ProfileInfo } from "../../Components/ProfileInfo";
-import stringToColor from "../../Utilities/StringToColor";
+import { profileSelector } from "../../Store/Profile/selectors";
+import { ROUTES } from "../../Router/constants";
+import { Redirect, useHistory } from "react-router-dom";
 import "./Profile.sass";
 
 export const Profile = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
-  const { displayName } = useSelector(currentUserSelector);
+
+  const { profileInfoIsChanged } = useSelector(profileSelector);
+  const { profileInfoLoading } = useSelector(profileSelector);
+
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(logout());
   };
+
+  const handleClickCloseSidebar = () => {
+    history.push("/");
+  };
+
+  if (profileInfoIsChanged) {
+    return <Redirect to={ROUTES.HOME} />;
+  }
+  if (profileInfoLoading) {
+    return (
+      <div className={"Loading"}>
+        <CircularProgress />
+      </div>
+    );
+  }
 
   return (
     <div className={"Container"}>
       <ChatWrapper />
       <div className={"Profile"}>
         <div className={"Profile-header"}>
-          <p>Profile settings</p>
+          <div className={"Profile-header-left"}>
+            <button
+              onClick={handleClickCloseSidebar}
+              className={"Btn-sidebar-close"}
+            >
+              &#129120;
+            </button>
+            <p>Profile settings</p>
+          </div>
           <Button onClick={handleLogout} color={"error"}>
             LOGOUT
           </Button>

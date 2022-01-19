@@ -12,19 +12,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { authSelector } from "../Store/Auth/selectors";
 import { useEffect } from "react";
 import { getUser } from "../Store/Auth/actions";
-import { profileSelector } from "../Store/Profile/selectors";
 import "./Router.sass";
 
 export const Router = () => {
   const { loading } = useSelector(authSelector);
-  const { profileInfoLoading } = useSelector(profileSelector);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getUser());
   }, [dispatch]);
 
-  if (loading || profileInfoLoading) {
+  if (loading) {
     return (
       <div className={"Loading"}>
         <CircularProgress />
